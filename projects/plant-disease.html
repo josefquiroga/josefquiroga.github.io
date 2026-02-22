@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Plant Disease Classification — Jose Quiroga</title>
+  <meta name="description" content="CNN-based plant disease classification project by Jose Quiroga — 89% accuracy on 20,000+ images." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@300;400;500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #0a0f0d; --surface: #111a15; --card: #162019;
+      --accent: #4ade80; --accent2: #86efac; --text: #e8f5ee;
+      --muted: #7a9e87; --border: #1e3527;
+      --serif: 'DM Serif Display', serif; --mono: 'DM Mono', monospace; --sans: 'DM Sans', sans-serif;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { background: var(--bg); color: var(--text); font-family: var(--sans); font-weight: 300; overflow-x: hidden; }
+
+    nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; justify-content: space-between; align-items: center; padding: 1.2rem 3rem; background: rgba(10,15,13,0.88); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); }
+    .nav-logo { font-family: var(--mono); font-size: 0.85rem; color: var(--accent); letter-spacing: 0.05em; text-decoration: none; }
+    .nav-links { display: flex; gap: 2.5rem; list-style: none; }
+    .nav-links a { font-family: var(--mono); font-size: 0.78rem; color: var(--muted); text-decoration: none; letter-spacing: 0.08em; text-transform: uppercase; transition: color 0.2s; }
+    .nav-links a:hover { color: var(--accent); }
+
+    /* HERO */
+    .project-hero { padding: 10rem 3rem 5rem; border-bottom: 1px solid var(--border); position: relative; overflow: hidden; max-width: 100%; }
+    .hero-grid { position: absolute; inset: 0; background-image: linear-gradient(rgba(74,222,128,0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(74,222,128,0.04) 1px, transparent 1px); background-size: 60px 60px; mask-image: radial-gradient(ellipse 70% 80% at 15% 50%, black, transparent); pointer-events: none; }
+    .breadcrumb { font-family: var(--mono); font-size: 0.73rem; color: var(--muted); margin-bottom: 1.5rem; opacity:0; animation: fadeUp 0.6s 0.1s forwards; }
+    .breadcrumb a { color: var(--muted); text-decoration: none; transition: color 0.2s; }
+    .breadcrumb a:hover { color: var(--accent); }
+    .breadcrumb span { color: var(--accent); }
+    .project-num { font-family: var(--mono); font-size: 0.73rem; color: var(--accent); letter-spacing: 0.15em; margin-bottom: 0.8rem; opacity:0; animation: fadeUp 0.6s 0.2s forwards; }
+    .project-hero h1 { font-family: var(--serif); font-size: clamp(2.2rem,5vw,4rem); line-height: 1.1; color: var(--text); max-width: 780px; margin-bottom: 1.5rem; opacity:0; animation: fadeUp 0.7s 0.3s forwards; }
+    .project-hero h1 em { font-style: italic; color: var(--accent); }
+    .hero-meta { display: flex; gap: 2rem; flex-wrap: wrap; opacity:0; animation: fadeUp 0.7s 0.5s forwards; }
+    .meta-item { display: flex; flex-direction: column; gap: 0.25rem; }
+    .meta-label { font-family: var(--mono); font-size: 0.65rem; color: var(--accent); letter-spacing: 0.12em; text-transform: uppercase; }
+    .meta-value { font-size: 0.9rem; color: var(--muted); }
+    .hero-tags { display: flex; gap: 0.4rem; flex-wrap: wrap; margin-top: 2rem; opacity:0; animation: fadeUp 0.7s 0.7s forwards; }
+    .tag { font-family: var(--mono); font-size: 0.68rem; padding: 0.25rem 0.65rem; background: rgba(74,222,128,0.07); border: 1px solid rgba(74,222,128,0.2); border-radius: 2px; color: var(--accent2); letter-spacing: 0.05em; }
+
+    /* LAYOUT */
+    .project-body { max-width: 1100px; margin: 0 auto; padding: 5rem 3rem; display: grid; grid-template-columns: 1fr 300px; gap: 5rem; align-items: start; }
+
+    /* CONTENT */
+    .content { display: flex; flex-direction: column; gap: 3.5rem; }
+    .content-section h2 { font-family: var(--serif); font-size: 1.6rem; color: var(--text); margin-bottom: 1.2rem; padding-bottom: 0.8rem; border-bottom: 1px solid var(--border); }
+    .content-section p { color: var(--muted); line-height: 1.85; font-size: 0.97rem; margin-bottom: 1rem; }
+    .content-section p:last-child { margin-bottom: 0; }
+    .content-section p strong { color: var(--text); font-weight: 500; }
+
+    .steps { display: flex; flex-direction: column; gap: 1.2rem; margin-top: 0.5rem; }
+    .step { display: grid; grid-template-columns: 2.5rem 1fr; gap: 1rem; align-items: start; }
+    .step-num { font-family: var(--mono); font-size: 0.72rem; color: var(--accent); border: 1px solid var(--border); border-radius: 2px; padding: 0.3rem 0.5rem; text-align: center; }
+    .step-content h4 { font-size: 0.95rem; color: var(--text); font-weight: 500; margin-bottom: 0.3rem; }
+    .step-content p { color: var(--muted); font-size: 0.88rem; line-height: 1.7; margin: 0; }
+
+    /* RESULTS GRID */
+    .results-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; margin-top: 1rem; }
+    .result-card { background: var(--card); border: 1px solid var(--border); border-radius: 4px; padding: 1.5rem; text-align: center; }
+    .result-num { font-family: var(--serif); font-size: 2.2rem; color: var(--accent); display: block; margin-bottom: 0.3rem; }
+    .result-label { font-family: var(--mono); font-size: 0.68rem; color: var(--muted); letter-spacing: 0.1em; text-transform: uppercase; }
+    .result-note { font-size: 0.8rem; color: var(--muted); margin-top: 0.3rem; display: block; }
+
+    /* SIDEBAR */
+    .sidebar { display: flex; flex-direction: column; gap: 1.2rem; position: sticky; top: 6rem; }
+    .sidebar-card { background: var(--card); border: 1px solid var(--border); border-radius: 4px; padding: 1.5rem; }
+    .sidebar-card h4 { font-family: var(--mono); font-size: 0.68rem; color: var(--accent); letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 1rem; }
+    .sidebar-card ul { list-style: none; display: flex; flex-direction: column; gap: 0.5rem; }
+    .sidebar-card ul li { font-size: 0.88rem; color: var(--muted); padding-left: 1rem; position: relative; }
+    .sidebar-card ul li::before { content: '→'; position: absolute; left: 0; color: var(--accent); font-family: var(--mono); font-size: 0.72rem; }
+    .sidebar-nav { display: flex; flex-direction: column; gap: 0.5rem; }
+    .sidebar-nav a { font-family: var(--mono); font-size: 0.75rem; color: var(--muted); text-decoration: none; padding: 0.5rem 0; border-bottom: 1px solid var(--border); transition: color 0.2s; }
+    .sidebar-nav a:last-child { border-bottom: none; }
+    .sidebar-nav a:hover { color: var(--accent); }
+
+    .btn { display: inline-block; padding: 0.75rem 1.8rem; font-family: var(--mono); font-size: 0.8rem; letter-spacing: 0.05em; text-decoration: none; border-radius: 2px; transition: all 0.2s; }
+    .btn-outline { border: 1px solid var(--border); color: var(--muted); display: block; text-align: center; }
+    .btn-outline:hover { border-color: var(--accent); color: var(--accent); }
+
+    /* NEXT/PREV */
+    .project-nav { max-width: 1100px; margin: 0 auto; padding: 0 3rem 5rem; display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; border-top: 1px solid var(--border); padding-top: 3rem; }
+    .proj-nav-card { background: var(--card); border: 1px solid var(--border); border-radius: 4px; padding: 1.5rem; text-decoration: none; transition: border-color 0.2s, transform 0.2s; }
+    .proj-nav-card:hover { border-color: rgba(74,222,128,0.3); transform: translateY(-2px); }
+    .proj-nav-label { font-family: var(--mono); font-size: 0.68rem; color: var(--accent); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 0.5rem; display: block; }
+    .proj-nav-title { font-family: var(--serif); font-size: 1rem; color: var(--text); }
+    .proj-nav-card.next { text-align: right; }
+
+    footer { border-top: 1px solid var(--border); padding: 2rem 3rem; display: flex; justify-content: space-between; align-items: center; }
+    footer p { font-family: var(--mono); font-size: 0.72rem; color: var(--muted); }
+    .footer-links { display: flex; gap: 1.5rem; }
+    .footer-links a { font-family: var(--mono); font-size: 0.72rem; color: var(--muted); text-decoration: none; transition: color 0.2s; }
+    .footer-links a:hover { color: var(--accent); }
+
+    .reveal { opacity: 0; transform: translateY(20px); transition: opacity 0.6s, transform 0.6s; }
+    .reveal.visible { opacity: 1; transform: none; }
+    @keyframes fadeUp { from { opacity:0; transform: translateY(16px); } to { opacity:1; transform: none; } }
+
+    @media (max-width: 900px) {
+      .project-body { grid-template-columns: 1fr; gap: 3rem; }
+      .sidebar { position: static; }
+      .results-grid { grid-template-columns: 1fr 1fr; }
+      nav { padding: 1rem 1.5rem; } .nav-links { gap: 1rem; }
+      .project-hero { padding: 8rem 1.5rem 3rem; }
+      .project-body, .project-nav { padding-left: 1.5rem; padding-right: 1.5rem; }
+      footer { flex-direction: column; gap: 1rem; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a href="../index.html" class="nav-logo">jose.quiroga</a>
+    <ul class="nav-links">
+      <li><a href="../projects.html">Projects</a></li>
+      <li><a href="../about.html">About</a></li>
+      <li><a href="../skills.html">Skills</a></li>
+      <li><a href="../publications.html">Publications</a></li>
+      <li><a href="../resume.html">Resume</a></li>
+      <li><a href="https://www.linkedin.com/in/josefquiroga/" target="_blank">LinkedIn ↗</a></li>
+      <li><a href="https://github.com/josefquiroga" target="_blank">GitHub ↗</a></li>
+    </ul>
+  </nav>
+
+  <div class="project-hero">
+    <div class="hero-grid"></div>
+    <p class="breadcrumb"><a href="../projects.html">Projects</a> <span>/ Plant Disease Classification</span></p>
+    <p class="project-num">Project 01</p>
+    <h1>Plant Disease Classification<br />using <em>Neural Networks</em></h1>
+    <div class="hero-meta">
+      <div class="meta-item"><span class="meta-label">Type</span><span class="meta-value">Computer Vision / Deep Learning</span></div>
+      <div class="meta-item"><span class="meta-label">Dataset</span><span class="meta-value">20,000+ images</span></div>
+      <div class="meta-item"><span class="meta-label">Accuracy</span><span class="meta-value">89%</span></div>
+      <div class="meta-item"><span class="meta-label">Framework</span><span class="meta-value">TensorFlow / Keras</span></div>
+    </div>
+    <div class="hero-tags">
+      <span class="tag">Computer Vision</span>
+      <span class="tag">CNN</span>
+      <span class="tag">TensorFlow</span>
+      <span class="tag">Image Classification</span>
+      <span class="tag">Python</span>
+      <span class="tag">Data Augmentation</span>
+    </div>
+  </div>
+
+
+  <div style="width:100%; max-height:480px; overflow:hidden; border-bottom:1px solid var(--border);">
+    <img src="../images/pic01.png" alt="Plant disease classification — leaf imagery" style="width:100%; height:480px; object-fit:cover; object-position:center; display:block; opacity:0.85;" />
+  </div>
+  <div class="project-body">
+    <div class="content">
+
+      <div class="content-section reveal">
+        <h2>Methodology & Technical Approach</h2>
+        <p>
+          The core challenge in plant disease classification is building a model that can reliably distinguish between healthy and diseased leaf tissue across multiple plant species — a task that requires the model to learn subtle visual patterns in texture, colour, and lesion morphology. A <strong>Convolutional Neural Network (CNN)</strong> was chosen as the architecture because of its proven ability to extract spatial hierarchies of features from image data.
+        </p>
+        <p>
+          The project followed a structured ML pipeline from raw data through to a validated, evaluated model:
+        </p>
+        <div class="steps">
+          <div class="step">
+            <span class="step-num">01</span>
+            <div class="step-content">
+              <h4>Data Collection & Preprocessing</h4>
+              <p>A dataset of over 20,000 labelled leaf images was used, spanning multiple plant species and disease categories. Images were resized to a consistent resolution, normalised to the [0,1] pixel range, and split into training, validation, and test sets.</p>
+            </div>
+          </div>
+          <div class="step">
+            <span class="step-num">02</span>
+            <div class="step-content">
+              <h4>Data Augmentation</h4>
+              <p>To improve generalisation and reduce overfitting on a relatively small dataset, augmentation techniques were applied during training — including random horizontal and vertical flips, rotations, zoom, and brightness adjustments. This artificially expanded the effective training set and exposed the model to greater visual variety.</p>
+            </div>
+          </div>
+          <div class="step">
+            <span class="step-num">03</span>
+            <div class="step-content">
+              <h4>Model Architecture</h4>
+              <p>The CNN was built using <strong>TensorFlow and Keras</strong>, consisting of multiple convolutional blocks (Conv2D + ReLU + MaxPooling), followed by dropout layers for regularisation, a flattening layer, and a dense softmax output layer for multi-class classification. The architecture was iteratively tuned to balance depth with computational efficiency.</p>
+            </div>
+          </div>
+          <div class="step">
+            <span class="step-num">04</span>
+            <div class="step-content">
+              <h4>Training & Optimisation</h4>
+              <p>The model was trained using the <strong>Adam optimiser</strong> with categorical cross-entropy loss. Early stopping was applied based on validation loss to prevent overfitting, and learning rate scheduling was used to fine-tune convergence in later epochs.</p>
+            </div>
+          </div>
+          <div class="step">
+            <span class="step-num">05</span>
+            <div class="step-content">
+              <h4>Evaluation</h4>
+              <p>Model performance was assessed on a held-out test set using accuracy, precision, recall, and confusion matrix analysis across disease classes — identifying which categories the model handled well and where misclassifications occurred most frequently.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="content-section reveal">
+        <h2>Results & Metrics</h2>
+        <p>
+          The final model achieved strong performance across the test set, demonstrating that a well-regularised CNN trained with augmented data can effectively distinguish plant diseases from visual leaf imagery alone.
+        </p>
+        <div class="results-grid">
+          <div class="result-card">
+            <span class="result-num">89%</span>
+            <span class="result-label">Test Accuracy</span>
+            <span class="result-note">On held-out test set</span>
+          </div>
+          <div class="result-card">
+            <span class="result-num">20K+</span>
+            <span class="result-label">Training Images</span>
+            <span class="result-note">Across multiple species</span>
+          </div>
+          <div class="result-card">
+            <span class="result-num">Multi</span>
+            <span class="result-label">Class Classification</span>
+            <span class="result-note">Healthy vs. multiple disease types</span>
+          </div>
+          <div class="result-card">
+            <span class="result-num">CNN</span>
+            <span class="result-label">Architecture</span>
+            <span class="result-note">Custom built with TensorFlow/Keras</span>
+          </div>
+        </div>
+        <p style="margin-top: 1.5rem;">
+          The 89% accuracy result demonstrates the viability of deep learning for agricultural diagnostics — a domain where traditional methods rely on trained agronomists conducting manual inspections. Automated classification at this accuracy level could meaningfully accelerate disease detection and help growers intervene earlier, reducing crop loss.
+        </p>
+      </div>
+
+    </div>
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar reveal">
+      <div class="sidebar-card">
+        <h4>Tech Stack</h4>
+        <ul>
+          <li>Python</li>
+          <li>TensorFlow & Keras</li>
+          <li>NumPy & Pandas</li>
+          <li>Matplotlib</li>
+          <li>Scikit-learn (evaluation)</li>
+        </ul>
+      </div>
+      <div class="sidebar-card">
+        <h4>Key Concepts</h4>
+        <ul>
+          <li>Convolutional Neural Networks</li>
+          <li>Data Augmentation</li>
+          <li>Transfer Learning techniques</li>
+          <li>Regularisation (Dropout)</li>
+          <li>Multi-class Classification</li>
+          <li>Confusion Matrix Analysis</li>
+        </ul>
+      </div>
+      <div class="sidebar-card">
+        <h4>Other Projects</h4>
+        <div class="sidebar-nav">
+          <a href="hydroponic.html">Autonomic Hydroponic System →</a>
+          <a href="satellite.html">Satellite Image Segmentation →</a>
+        </div>
+      </div>
+      <a href="../projects.html" class="btn btn-outline">← Back to Projects</a>
+    </aside>
+  </div>
+
+  <!-- NEXT / PREV -->
+  <div class="project-nav">
+    <div></div>
+    <a href="hydroponic.html" class="proj-nav-card next">
+      <span class="proj-nav-label">Next Project →</span>
+      <span class="proj-nav-title">Autonomic Hydroponic System with Real-Time Monitoring</span>
+    </a>
+  </div>
+
+  <footer>
+    <p>© 2025 Jose Quiroga</p>
+    <div class="footer-links">
+      <a href="../projects.html">Projects</a>
+      <a href="../about.html">About</a>
+      <a href="../resume.html">Resume</a>
+      <a href="https://www.linkedin.com/in/josefquiroga/" target="_blank">LinkedIn</a>
+      <a href="/cdn-cgi/l/email-protection#ea8085998f8cc49b9f8398858d8baa8d878b8386c4898587">Email</a>
+    </div>
+  </footer>
+
+  <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+    const reveals = document.querySelectorAll('.reveal');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((e, i) => { if (e.isIntersecting) { setTimeout(() => e.target.classList.add('visible'), 100 * i); } } );
+    });
+    reveals.forEach(el => observer.observe(el));
+  </script>            

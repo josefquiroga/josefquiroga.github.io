@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Resume — Jose Quiroga</title>
+  <meta name="description" content="Resume of Jose Quiroga — Data Scientist based in Sydney, Australia." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@300;400;500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #0a0f0d; --surface: #111a15; --card: #162019;
+      --accent: #4ade80; --accent2: #86efac; --text: #e8f5ee;
+      --muted: #7a9e87; --border: #1e3527;
+      --serif: 'DM Serif Display', serif; --mono: 'DM Mono', monospace; --sans: 'DM Sans', sans-serif;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { background: var(--bg); color: var(--text); font-family: var(--sans); font-weight: 300; overflow-x: hidden; }
+
+    nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; justify-content: space-between; align-items: center; padding: 1.2rem 3rem; background: rgba(10,15,13,0.88); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); }
+    .nav-logo { font-family: var(--mono); font-size: 0.85rem; color: var(--accent); letter-spacing: 0.05em; text-decoration: none; }
+    .nav-links { display: flex; gap: 2.5rem; list-style: none; }
+    .nav-links a { font-family: var(--mono); font-size: 0.78rem; color: var(--muted); text-decoration: none; letter-spacing: 0.08em; text-transform: uppercase; transition: color 0.2s; }
+    .nav-links a:hover, .nav-links a.active { color: var(--accent); }
+
+    .page-hero { padding: 10rem 3rem 5rem; border-bottom: 1px solid var(--border); position: relative; overflow: hidden; }
+    .hero-grid { position: absolute; inset: 0; background-image: linear-gradient(rgba(74,222,128,0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(74,222,128,0.04) 1px, transparent 1px); background-size: 60px 60px; mask-image: radial-gradient(ellipse 70% 80% at 15% 50%, black, transparent); pointer-events: none; }
+    .page-tag { font-family: var(--mono); font-size: 0.75rem; color: var(--accent); letter-spacing: 0.15em; text-transform: uppercase; margin-bottom: 1rem; opacity:0; animation: fadeUp 0.7s 0.2s forwards; }
+    .page-title { font-family: var(--serif); font-size: clamp(2.8rem,6vw,5rem); line-height: 1.1; color: var(--text); opacity:0; animation: fadeUp 0.7s 0.4s forwards; }
+    .page-title em { font-style: italic; color: var(--accent); }
+    .page-sub { margin-top: 1.2rem; color: var(--muted); max-width: 520px; line-height: 1.8; opacity:0; animation: fadeUp 0.7s 0.6s forwards; }
+    .hero-cta { margin-top: 2rem; opacity:0; animation: fadeUp 0.7s 0.8s forwards; }
+
+    main { max-width: 900px; margin: 0 auto; padding: 5rem 3rem; display: flex; flex-direction: column; gap: 4rem; }
+
+    .section-label { font-family: var(--mono); font-size: 0.73rem; color: var(--accent); letter-spacing: 0.15em; text-transform: uppercase; margin-bottom: 0.8rem; }
+    .section-title { font-family: var(--serif); font-size: clamp(1.4rem,2.5vw,2rem); color: var(--text); padding-bottom: 0.8rem; border-bottom: 1px solid var(--border); margin-bottom: 2rem; }
+
+    /* Experience */
+    .exp-item { margin-bottom: 2.5rem; }
+    .exp-item:last-child { margin-bottom: 0; }
+    .exp-header { display: flex; justify-content: space-between; align-items: flex-start; gap: 1rem; margin-bottom: 0.3rem; flex-wrap: wrap; }
+    .exp-title { font-family: var(--serif); font-size: 1.15rem; color: var(--text); }
+    .exp-date { font-family: var(--mono); font-size: 0.72rem; color: var(--muted); white-space: nowrap; }
+    .exp-company { font-family: var(--mono); font-size: 0.8rem; color: var(--accent); margin-bottom: 0.8rem; }
+    .exp-bullets { list-style: none; padding: 0; }
+    .exp-bullets li { color: var(--muted); font-size: 0.92rem; line-height: 1.75; padding-left: 1.2rem; position: relative; margin-bottom: 0.5rem; }
+    .exp-bullets li::before { content: '→'; position: absolute; left: 0; color: var(--accent); font-family: var(--mono); font-size: 0.75rem; top: 0.15rem; }
+    .exp-bullets li strong { color: var(--text); font-weight: 500; }
+
+    /* Education */
+    .edu-item { display: grid; grid-template-columns: 1fr auto; gap: 1rem; margin-bottom: 1.8rem; padding-bottom: 1.8rem; border-bottom: 1px solid var(--border); }
+    .edu-item:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+    .edu-degree { font-family: var(--serif); font-size: 1.1rem; color: var(--text); margin-bottom: 0.25rem; }
+    .edu-school { font-family: var(--mono); font-size: 0.8rem; color: var(--accent); margin-bottom: 0.25rem; }
+    .edu-note { font-size: 0.85rem; color: var(--muted); }
+    .edu-date { font-family: var(--mono); font-size: 0.72rem; color: var(--muted); white-space: nowrap; text-align: right; }
+
+    /* Skills inline */
+    .skills-block { display: flex; flex-direction: column; gap: 0.8rem; }
+    .skill-row { display: flex; gap: 0.8rem; align-items: baseline; flex-wrap: wrap; }
+    .skill-label { font-family: var(--mono); font-size: 0.72rem; color: var(--accent); letter-spacing: 0.08em; min-width: 130px; }
+    .skill-value { color: var(--muted); font-size: 0.9rem; }
+
+    .btn { display: inline-block; padding: 0.75rem 1.8rem; font-family: var(--mono); font-size: 0.8rem; letter-spacing: 0.05em; text-decoration: none; border-radius: 2px; transition: all 0.2s; }
+    .btn-primary { background: var(--accent); color: var(--bg); font-weight: 500; }
+    .btn-primary:hover { background: var(--accent2); transform: translateY(-1px); }
+
+    footer { border-top: 1px solid var(--border); padding: 2rem 3rem; display: flex; justify-content: space-between; align-items: center; }
+    footer p { font-family: var(--mono); font-size: 0.72rem; color: var(--muted); }
+    .footer-links { display: flex; gap: 1.5rem; }
+    .footer-links a { font-family: var(--mono); font-size: 0.72rem; color: var(--muted); text-decoration: none; transition: color 0.2s; }
+    .footer-links a:hover { color: var(--accent); }
+
+    .reveal { opacity: 0; transform: translateY(20px); transition: opacity 0.6s, transform 0.6s; }
+    .reveal.visible { opacity: 1; transform: none; }
+    @keyframes fadeUp { from { opacity:0; transform: translateY(18px); } to { opacity:1; transform: none; } }
+
+    @media (max-width: 768px) {
+      nav { padding: 1rem 1.5rem; } .nav-links { gap: 1rem; }
+      .page-hero { padding: 8rem 1.5rem 3rem; }
+      main { padding: 3rem 1.5rem; }
+      .edu-item { grid-template-columns: 1fr; }
+      .edu-date { text-align: left; }
+      footer { flex-direction: column; gap: 1rem; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a href="index.html" class="nav-logo">jose.quiroga</a>
+    <ul class="nav-links">
+      <li><a href="index.html">Projects</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="skills.html">Skills</a></li>
+      <li><a href="publications.html">Publications</a></li>
+      <li><a href="https://www.linkedin.com/in/josefquiroga/" target="_blank">LinkedIn ↗</a></li>
+      <li><a href="https://github.com/josefquiroga" target="_blank">GitHub ↗</a></li>
+    </ul>
+  </nav>
+
+  <div class="page-hero">
+    <div class="hero-grid"></div>
+    <p class="page-tag">Experience</p>
+    <h1 class="page-title">Jose<br /><em>Quiroga</em></h1>
+    <p class="page-sub">Data Scientist · Sydney, NSW, Australia · Open to new opportunities in Sydney and remote US roles.</p>
+    <div class="hero-cta">
+      <a href="mailto:josef.quiroga@gmail.com" class="btn btn-primary">Get in touch ↗</a>
+    </div>
+  </div>
+
+  <main>
+
+    <!-- EXPERIENCE -->
+    <div class="reveal">
+      <p class="section-label">Work history</p>
+      <h2 class="section-title">Experience</h2>
+
+      <div class="exp-item">
+        <div class="exp-header">
+          <span class="exp-title">Data Scientist</span>
+          <span class="exp-date">Dec 2024 — Present</span>
+        </div>
+        <p class="exp-company">DataMesh Group · Sydney, NSW</p>
+        <ul class="exp-bullets">
+          <li>Engineered and deployed predictive models including <strong>SARIMA forecasting</strong> and supervised ML solutions (BigQuery ML, Scikit-learn) to forecast merchant gross revenue, driving proactive business decisions.</li>
+          <li>Led a data quality initiative building scalable <strong>ELT pipelines on GCP (Apache Beam)</strong> and a BigQuery observability database — resulting in a <strong>90% reduction in critical duplicate transactions</strong>.</li>
+          <li>Redesigned core BigQuery datasets and Apache Beam ingestion processes, delivering a <strong>47% reduction in cloud infrastructure costs</strong>.</li>
+        </ul>
+      </div>
+
+      <div class="exp-item">
+        <div class="exp-header">
+          <span class="exp-title">Junior Data Analyst</span>
+          <span class="exp-date">May 2023 — Dec 2024</span>
+        </div>
+        <p class="exp-company">DataMesh Group · Sydney, NSW</p>
+        <ul class="exp-bullets">
+          <li>Generated operations and transaction reports integrating APIs and multi-source data for financial reconciliation of settlements.</li>
+          <li>Built <strong>Tableau dashboards</strong> monitoring consumer trends, informing marketing strategies via Salesforce integration.</li>
+          <li>Automated recurring transaction reports using <strong>AWS Lambda, Athena, SES, and S3</strong>, reducing manual processing time significantly.</li>
+          <li>Ensured data quality and integrity through rigorous validation and auditing practices.</li>
+        </ul>
+      </div>
+
+      <div class="exp-item">
+        <div class="exp-header">
+          <span class="exp-title">Automation Engineer</span>
+          <span class="exp-date">Feb 2021 — Jan 2022</span>
+        </div>
+        <p class="exp-company">Ford Motor Company · Hermosillo, Mexico</p>
+        <ul class="exp-bullets">
+          <li>Improved production efficiency via real-time and historical data analysis, achieving a <strong>450 parts/hour cycle rate</strong>.</li>
+          <li>Reduced equipment downtime by identifying trends and issuing proactive maintenance orders.</li>
+          <li>Used <strong>MS-SQL</strong> to generate reports on MTTR and MTBF, reducing production inefficiencies and achieving KPI targets.</li>
+        </ul>
+      </div>
+
+      <div class="exp-item">
+        <div class="exp-header">
+          <span class="exp-title">Territory Manager</span>
+          <span class="exp-date">May 2019 — Apr 2020</span>
+        </div>
+        <p class="exp-company">Matec America · Greensboro, USA</p>
+        <ul class="exp-bullets">
+          <li>Led market analysis and secured a <strong>$1.25MM annual dealership contract</strong>, demonstrating business acumen and CRM-driven client management.</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- EDUCATION -->
+    <div class="reveal">
+      <p class="section-label">Academic background</p>
+      <h2 class="section-title">Education</h2>
+
+      <div class="edu-item">
+        <div>
+          <p class="edu-degree">MSc. Data Science and Innovation</p>
+          <p class="edu-school">University of Technology Sydney (UTS)</p>
+          <p class="edu-note">First place, UTS Consulting Cup 2022</p>
+        </div>
+        <span class="edu-date">Jan 2022 — Dec 2023</span>
+      </div>
+
+      <div class="edu-item">
+        <div>
+          <p class="edu-degree">MEng. Artificial Intelligence and Internet of Things</p>
+          <p class="edu-school">University of Sonora</p>
+          <p class="edu-note">Completed concurrently with MSc (2022–2023)</p>
+        </div>
+        <span class="edu-date">Jan 2020 — Aug 2023</span>
+      </div>
+
+      <div class="edu-item">
+        <div>
+          <p class="edu-degree">BSc. Mechatronics Engineering</p>
+          <p class="edu-school">Monterrey Institute of Technology and Higher Education (ITESM)</p>
+          <p class="edu-note">Study abroad: Polytechnic University of Milan, Italy</p>
+        </div>
+        <span class="edu-date">Jan 2012 — Dec 2018</span>
+      </div>
+    </div>
+
+    <!-- SKILLS -->
+    <div class="reveal">
+      <p class="section-label">Technical profile</p>
+      <h2 class="section-title">Skills</h2>
+      <div class="skills-block">
+        <div class="skill-row">
+          <span class="skill-label">Languages</span>
+          <span class="skill-value">Python, SQL, R</span>
+        </div>
+        <div class="skill-row">
+          <span class="skill-label">ML & AI</span>
+          <span class="skill-value">Scikit-learn, TensorFlow, Keras, Pandas, NumPy, SARIMA, OpenCV</span>
+        </div>
+        <div class="skill-row">
+          <span class="skill-label">Cloud (GCP)</span>
+          <span class="skill-value">BigQuery, Apache Beam, Cloud Run, GCS</span>
+        </div>
+        <div class="skill-row">
+          <span class="skill-label">Cloud (AWS)</span>
+          <span class="skill-value">Lambda, Athena, SES, S3</span>
+        </div>
+        <div class="skill-row">
+          <span class="skill-label">BI & Visualisation</span>
+          <span class="skill-value">Tableau, Power BI, Salesforce</span>
+        </div>
+        <div class="skill-row">
+          <span class="skill-label">Dev Tools</span>
+          <span class="skill-value">Docker, Git, Jupyter</span>
+        </div>
+        <div class="skill-row">
+          <span class="skill-label">Spoken Languages</span>
+          <span class="skill-value">Spanish (native), English (professional), Italian (PLIDA B2)</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- PUBLICATIONS -->
+    <div class="reveal">
+      <p class="section-label">Research</p>
+      <h2 class="section-title">Publications</h2>
+      <p style="color: var(--muted); font-size: 0.93rem; line-height: 1.75;">
+        <span style="color: var(--accent); font-family: var(--mono); font-size: 0.75rem;">IEEE · 2021</span><br />
+        <strong style="color: var(--text);">Autonomic Hydroponic System with Real Time Monitoring</strong><br />
+        9th International Conference on Control, Mechatronics and Automation (ICCMA 2021)<br />
+        Nuñez C., Moreno J., Valdez J., <strong style="color: var(--text);">Quiroga J.</strong>, Pacheco J., Benitez V.H.
+      </p>
+    </div>
+
+    <!-- LEADERSHIP -->
+    <div class="reveal">
+      <p class="section-label">Volunteering & Activities</p>
+      <h2 class="section-title">Leadership</h2>
+      <div class="exp-item">
+        <div class="exp-header">
+          <span class="exp-title">Mathematics Tutor</span>
+          <span class="exp-date">Jul 2022 — Dec 2023</span>
+        </div>
+        <p class="exp-company">EzyMath Tutoring · Sydney, NSW</p>
+        <ul class="exp-bullets">
+          <li>Tutored Grade 11 and 12 students in Mathematics Extension for HSC preparation.</li>
+        </ul>
+      </div>
+      <div class="exp-item" style="margin-bottom:0;">
+        <div class="exp-header">
+          <span class="exp-title">UTS Consulting Club</span>
+          <span class="exp-date">Aug 2022 — Nov 2022</span>
+        </div>
+        <ul class="exp-bullets">
+          <li><strong>First place</strong> in the UTS Consulting Cup — team proposal selected by industry consultants from 8 competing teams.</li>
+        </ul>
+      </div>
+    </div>
+
+  </main>
+
+  <footer>
+    <p>© 2025 Jose Quiroga</p>
+    <div class="footer-links">
+      <a href="https://www.linkedin.com/in/josefquiroga/" target="_blank">LinkedIn</a>
+      <a href="https://github.com/josefquiroga" target="_blank">GitHub</a>
+      <a href="mailto:josef.quiroga@gmail.com">Email</a>
+    </div>
+  </footer>
+
+  <script>
+    const reveals = document.querySelectorAll('.reveal');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((e, i) => { if (e.isIntersecting) { setTimeout(() => e.target.classList.add('visible'), i * 80); observer.unobserve(e.target); } });
+    }, { threshold: 0.08 });
+    reveals.forEach(el => observer.observe(el));
+  </script>
+</body>
+</html>

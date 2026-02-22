@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Autonomic Hydroponic System — Jose Quiroga</title>
+  <meta name="description" content="IEEE-published IoT hydroponic system with real-time monitoring and autonomic computing — Jose Quiroga." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@300;400;500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #0a0f0d; --surface: #111a15; --card: #162019;
+      --accent: #4ade80; --accent2: #86efac; --text: #e8f5ee;
+      --muted: #7a9e87; --border: #1e3527;
+      --serif: 'DM Serif Display', serif; --mono: 'DM Mono', monospace; --sans: 'DM Sans', sans-serif;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { background: var(--bg); color: var(--text); font-family: var(--sans); font-weight: 300; overflow-x: hidden; }
+
+    nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; justify-content: space-between; align-items: center; padding: 1.2rem 3rem; background: rgba(10,15,13,0.88); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); }
+    .nav-logo { font-family: var(--mono); font-size: 0.85rem; color: var(--accent); letter-spacing: 0.05em; text-decoration: none; }
+    .nav-links { display: flex; gap: 2.5rem; list-style: none; }
+    .nav-links a { font-family: var(--mono); font-size: 0.78rem; color: var(--muted); text-decoration: none; letter-spacing: 0.08em; text-transform: uppercase; transition: color 0.2s; }
+    .nav-links a:hover { color: var(--accent); }
+
+    .project-hero { padding: 10rem 3rem 5rem; border-bottom: 1px solid var(--border); position: relative; overflow: hidden; }
+    .hero-grid { position: absolute; inset: 0; background-image: linear-gradient(rgba(74,222,128,0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(74,222,128,0.04) 1px, transparent 1px); background-size: 60px 60px; mask-image: radial-gradient(ellipse 70% 80% at 15% 50%, black, transparent); pointer-events: none; }
+    .breadcrumb { font-family: var(--mono); font-size: 0.73rem; color: var(--muted); margin-bottom: 1.5rem; opacity:0; animation: fadeUp 0.6s 0.1s forwards; }
+    .breadcrumb a { color: var(--muted); text-decoration: none; transition: color 0.2s; }
+    .breadcrumb a:hover { color: var(--accent); }
+    .breadcrumb span { color: var(--accent); }
+    .project-num { font-family: var(--mono); font-size: 0.73rem; color: var(--accent); letter-spacing: 0.15em; margin-bottom: 0.8rem; opacity:0; animation: fadeUp 0.6s 0.2s forwards; }
+    .project-hero h1 { font-family: var(--serif); font-size: clamp(2.2rem,5vw,4rem); line-height: 1.1; color: var(--text); max-width: 780px; margin-bottom: 1.5rem; opacity:0; animation: fadeUp 0.7s 0.3s forwards; }
+    .project-hero h1 em { font-style: italic; color: var(--accent); }
+
+    .ieee-badge { display: inline-flex; align-items: center; gap: 0.5rem; font-family: var(--mono); font-size: 0.72rem; color: var(--accent); border: 1px solid rgba(74,222,128,0.3); padding: 0.4rem 0.9rem; border-radius: 2px; margin-bottom: 1.5rem; opacity:0; animation: fadeUp 0.6s 0.25s forwards; background: rgba(74,222,128,0.05); text-decoration: none; transition: background 0.2s; }
+    .ieee-badge:hover { background: rgba(74,222,128,0.12); }
+
+    .hero-meta { display: flex; gap: 2rem; flex-wrap: wrap; opacity:0; animation: fadeUp 0.7s 0.5s forwards; }
+    .meta-item { display: flex; flex-direction: column; gap: 0.25rem; }
+    .meta-label { font-family: var(--mono); font-size: 0.65rem; color: var(--accent); letter-spacing: 0.12em; text-transform: uppercase; }
+    .meta-value { font-size: 0.9rem; color: var(--muted); }
+    .hero-tags { display: flex; gap: 0.4rem; flex-wrap: wrap; margin-top: 2rem; opacity:0; animation: fadeUp 0.7s 0.7s forwards; }
+    .tag { font-family: var(--mono); font-size: 0.68rem; padding: 0.25rem 0.65rem; background: rgba(74,222,128,0.07); border: 1px solid rgba(74,222,128,0.2); border-radius: 2px; color: var(--accent2); letter-spacing: 0.05em; }
+
+    .project-body { max-width: 1100px; margin: 0 auto; padding: 5rem 3rem; display: grid; grid-template-columns: 1fr 300px; gap: 5rem; align-items: start; }
+
+    .content { display: flex; flex-direction: column; gap: 3.5rem; }
+    .content-section h2 { font-family: var(--serif); font-size: 1.6rem; color: var(--text); margin-bottom: 1.2rem; padding-bottom: 0.8rem; border-bottom: 1px solid var(--border); }
+    .content-section p { color: var(--muted); line-height: 1.85; font-size: 0.97rem; margin-bottom: 1rem; }
+    .content-section p:last-child { margin-bottom: 0; }
+    .content-section p strong { color: var(--text); font-weight: 500; }
+
+    .steps { display: flex; flex-direction: column; gap: 1.2rem; margin-top: 0.5rem; }
+    .step { display: grid; grid-template-columns: 2.5rem 1fr; gap: 1rem; align-items: start; }
+    .step-num { font-family: var(--mono); font-size: 0.72rem; color: var(--accent); border: 1px solid var(--border); border-radius: 2px; padding: 0.3rem 0.5rem; text-align: center; }
+    .step-content h4 { font-size: 0.95rem; color: var(--text); font-weight: 500; margin-bottom: 0.3rem; }
+    .step-content p { color: var(--muted); font-size: 0.88rem; line-height: 1.7; margin: 0; }
+
+    .results-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; margin-top: 1rem; }
+    .result-card { background: var(--card); border: 1px solid var(--border); border-radius: 4px; padding: 1.5rem; text-align: center; }
+    .result-num { font-family: var(--serif); font-size: 2rem; color: var(--accent); display: block; margin-bottom: 0.3rem; }
+    .result-label { font-family: var(--mono); font-size: 0.68rem; color: var(--muted); letter-spacing: 0.1em; text-transform: uppercase; }
+    .result-note { font-size: 0.8rem; color: var(--muted); margin-top: 0.3rem; display: block; }
+
+    .role-card { background: var(--card); border: 1px solid var(--border); border-left: 3px solid var(--accent); border-radius: 4px; padding: 1.5rem; margin-top: 0.5rem; }
+    .role-card h4 { font-family: var(--mono); font-size: 0.7rem; color: var(--accent); letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 0.6rem; }
+    .role-card p { color: var(--muted); font-size: 0.9rem; line-height: 1.7; margin: 0; }
+
+    .sidebar { display: flex; flex-direction: column; gap: 1.2rem; position: sticky; top: 6rem; }
+    .sidebar-card { background: var(--card); border: 1px solid var(--border); border-radius: 4px; padding: 1.5rem; }
+    .sidebar-card h4 { font-family: var(--mono); font-size: 0.68rem; color: var(--accent); letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 1rem; }
+    .sidebar-card ul { list-style: none; display: flex; flex-direction: column; gap: 0.5rem; }
+    .sidebar-card ul li { font-size: 0.88rem; color: var(--muted); padding-left: 1rem; position: relative; }
+    .sidebar-card ul li::before { content: '→'; position: absolute; left: 0; color: var(--accent); font-family: var(--mono); font-size: 0.72rem; }
+    .sidebar-nav { display: flex; flex-direction: column; gap: 0.5rem; }
+    .sidebar-nav a { font-family: var(--mono); font-size: 0.75rem; color: var(--muted); text-decoration: none; padding: 0.5rem 0; border-bottom: 1px solid var(--border); transition: color 0.2s; }
+    .sidebar-nav a:last-child { border-bottom: none; }
+    .sidebar-nav a:hover { color: var(--accent); }
+
+    .btn { display: inline-block; padding: 0.75rem 1.8rem; font-family: var(--mono); font-size: 0.8rem; letter-spacing: 0.05em; text-decoration: none; border-radius: 2px; transition: all 0.2s; }
+    .btn-primary { background: var(--accent); color: var(--bg); font-weight: 500; display: block; text-align: center; }
+    .btn-primary:hover { background: var(--accent2); }
+    .btn-outline { border: 1px solid var(--border); color: var(--muted); display: block; text-align: center; }
+    .btn-outline:hover { border-color: var(--accent); color: var(--accent); }
+
+    .project-nav { max-width: 1100px; margin: 0 auto; padding: 3rem 3rem 5rem; display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; border-top: 1px solid var(--border); }
+    .proj-nav-card { background: var(--card); border: 1px solid var(--border); border-radius: 4px; padding: 1.5rem; text-decoration: none; transition: border-color 0.2s, transform 0.2s; }
+    .proj-nav-card:hover { border-color: rgba(74,222,128,0.3); transform: translateY(-2px); }
+    .proj-nav-label { font-family: var(--mono); font-size: 0.68rem; color: var(--accent); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 0.5rem; display: block; }
+    .proj-nav-title { font-family: var(--serif); font-size: 1rem; color: var(--text); }
+    .proj-nav-card.next { text-align: right; }
+
+    footer { border-top: 1px solid var(--border); padding: 2rem 3rem; display: flex; justify-content: space-between; align-items: center; }
+    footer p { font-family: var(--mono); font-size: 0.72rem; color: var(--muted); }
+    .footer-links { display: flex; gap: 1.5rem; }
+    .footer-links a { font-family: var(--mono); font-size: 0.72rem; color: var(--muted); text-decoration: none; transition: color 0.2s; }
+    .footer-links a:hover { color: var(--accent); }
+
+    .reveal { opacity: 0; transform: translateY(20px); transition: opacity 0.6s, transform 0.6s; }
+    .reveal.visible { opacity: 1; transform: none; }
+    @keyframes fadeUp { from { opacity:0; transform: translateY(16px); } to { opacity:1; transform: none; } }
+
+    @media (max-width: 900px) {
+      .project-body { grid-template-columns: 1fr; gap: 3rem; }
+      .sidebar { position: static; }
+      nav { padding: 1rem 1.5rem; } .nav-links { gap: 1rem; }
+      .project-hero { padding: 8rem 1.5rem 3rem; }
+      .project-body, .project-nav { padding-left: 1.5rem; padding-right: 1.5rem; }
+      footer { flex-direction: column; gap: 1rem; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a href="../index.html" class="nav-logo">jose.quiroga</a>
+    <ul class="nav-links">
+      <li><a href="../projects.html">Projects</a></li>
+      <li><a href="../about.html">About</a></li>
+      <li><a href="../skills.html">Skills</a></li>
+      <li><a href="../publications.html">Publications</a></li>
+      <li><a href="../resume.html">Resume</a></li>
+      <li><a href="https://www.linkedin.com/in/josefquiroga/" target="_blank">LinkedIn ↗</a></li>
+      <li><a href="https://github.com/josefquiroga" target="_blank">GitHub ↗</a></li>
+    </ul>
+  </nav>
+
+  <div class="project-hero">
+    <div class="hero-grid"></div>
+    <p class="breadcrumb"><a href="../projects.html">Projects</a> <span>/ Autonomic Hydroponic System</span></p>
+    <a href="https://ieeexplore.ieee.org/document/9646221" class="ieee-badge" target="_blank">★ IEEE Published — ICCMA 2021</a>
+    <p class="project-num">Project 02</p>
+    <h1>Autonomic Hydroponic System<br />with <em>Real-Time Monitoring</em></h1>
+    <div class="hero-meta">
+      <div class="meta-item"><span class="meta-label">Type</span><span class="meta-value">IoT / Embedded Systems</span></div>
+      <div class="meta-item"><span class="meta-label">Published</span><span class="meta-value">ICCMA 2021 — IEEE</span></div>
+      <div class="meta-item"><span class="meta-label">Role</span><span class="meta-value">Research & Electronics</span></div>
+      <div class="meta-item"><span class="meta-label">Domain</span><span class="meta-value">Smart Agriculture</span></div>
+    </div>
+    <div class="hero-tags">
+      <span class="tag">IoT</span>
+      <span class="tag">Embedded Systems</span>
+      <span class="tag">Autonomic Computing</span>
+      <span class="tag">Real-Time Monitoring</span>
+      <span class="tag">Smart Agriculture</span>
+      <span class="tag">IEEE Published</span>
+    </div>
+  </div>
+
+
+  <div style="width:100%; max-height:480px; overflow:hidden; border-bottom:1px solid var(--border);">
+    <img src="../images/pic02.png" alt="Autonomic hydroponic system prototype" style="width:100%; height:480px; object-fit:cover; object-position:center; display:block; opacity:0.85;" />
+  </div>
+  <div class="project-body">
+    <div class="content">
+
+      <div class="content-section reveal">
+        <h2>Methodology & Technical Approach</h2>
+        <p>
+          Traditional hydroponic systems require constant manual oversight — monitoring nutrient levels, pH, water temperature, and lighting schedules. This project set out to remove that dependency by building a <strong>self-managing prototype</strong> that applies Autonomic Computing principles to agricultural IoT — enabling the system to monitor, adapt, and repair itself without human intervention.
+        </p>
+        <p>
+          The system was built around IoT-connected embedded devices that continuously collect sensor data and trigger automated responses based on defined thresholds — bringing the four pillars of autonomic computing (self-monitoring, self-regulation, self-healing, and self-optimisation) into a practical agricultural context.
+        </p>
+        <div class="steps">
+          <div class="step">
+            <span class="step-num">01</span>
+            <div class="step-content">
+              <h4>Sensor Network & Electronics Design</h4>
+              <p>The hardware layer consisted of embedded microcontrollers connected to an array of environmental sensors measuring pH levels, nutrient concentration, water temperature, humidity, and ambient light. The electronics were designed and assembled to enable reliable continuous sensing, with careful attention to noise reduction and signal integrity in a wet environment.</p>
+            </div>
+          </div>
+          <div class="step">
+            <span class="step-num">02</span>
+            <div class="step-content">
+              <h4>Real-Time Data Acquisition</h4>
+              <p>Sensor readings were collected at regular intervals and streamed to a monitoring layer in real time. This continuous data flow was the foundation for both live visualisation and the autonomic decision logic — ensuring the system could respond to environmental changes as they occurred rather than on a fixed schedule.</p>
+            </div>
+          </div>
+          <div class="step">
+            <span class="step-num">03</span>
+            <div class="step-content">
+              <h4>Autonomic Computing Integration</h4>
+              <p>The control logic implemented the MAPE-K loop (Monitor, Analyse, Plan, Execute — with a shared Knowledge base), which is the standard framework for autonomic systems. When sensor readings deviated from optimal ranges, the system automatically triggered corrective actions — adjusting nutrient dosing pumps, activating grow lights, or alerting for manual intervention when an issue fell outside automated recovery.</p>
+            </div>
+          </div>
+          <div class="step">
+            <span class="step-num">04</span>
+            <div class="step-content">
+              <h4>Monitoring Interface</h4>
+              <p>A real-time dashboard was built to visualise live sensor streams, system status, and event logs — giving operators visibility into what the autonomic system was doing and why. This was critical for validating system behaviour and building trust in automated decisions.</p>
+            </div>
+          </div>
+        </div>
+        <div class="role-card" style="margin-top: 1.5rem;">
+          <h4>My Role in This Project</h4>
+          <p>As part of a multi-disciplinary research team, my contributions focused on the <strong>research foundation and electronics design</strong> — including the sensor network architecture, embedded hardware selection and assembly, and the integration of IoT devices with the monitoring layer. The work was conducted collaboratively with co-authors spanning software, agronomy, and systems engineering.</p>
+        </div>
+      </div>
+
+      <div class="content-section reveal">
+        <h2>Results & Outcomes</h2>
+        <p>
+          The prototype successfully demonstrated that Autonomic Computing principles can be effectively applied to an agricultural IoT context. The system operated continuously, responding to environmental changes in real time without manual intervention — validating the core hypothesis of the research.
+        </p>
+        <div class="results-grid">
+          <div class="result-card">
+            <span class="result-num">4</span>
+            <span class="result-label">Autonomic Properties</span>
+            <span class="result-note">Self-monitor, regulate, heal, optimise</span>
+          </div>
+          <div class="result-card">
+            <span class="result-num">IEEE</span>
+            <span class="result-label">Publication</span>
+            <span class="result-note">ICCMA 2021 — peer reviewed</span>
+          </div>
+          <div class="result-card">
+            <span class="result-num">IoT</span>
+            <span class="result-label">Architecture</span>
+            <span class="result-note">Embedded sensors + real-time control</span>
+          </div>
+          <div class="result-card">
+            <span class="result-num">Live</span>
+            <span class="result-label">Monitoring</span>
+            <span class="result-note">Real-time dashboard with event logs</span>
+          </div>
+        </div>
+        <p style="margin-top:1.5rem;">
+          The paper was accepted and presented at the <strong>9th International Conference on Control, Mechatronics and Automation (ICCMA 2021)</strong> and published on IEEE Xplore. It demonstrates how low-cost embedded systems, combined with sound autonomic computing architecture, can meaningfully reduce the labour and expertise required to run hydroponic operations at scale.
+        </p>
+      </div>
+
+    </div>
+
+    <aside class="sidebar reveal">
+      <a href="https://ieeexplore.ieee.org/document/9646221" class="btn btn-primary" target="_blank" style="margin-bottom:0.2rem;">Read on IEEE Xplore ↗</a>
+      <div class="sidebar-card">
+        <h4>Tech & Tools</h4>
+        <ul>
+          <li>Embedded Microcontrollers</li>
+          <li>IoT Sensors (pH, temp, humidity)</li>
+          <li>MAPE-K Autonomic Loop</li>
+          <li>Real-Time Dashboard</li>
+          <li>Data Acquisition Systems</li>
+        </ul>
+      </div>
+      <div class="sidebar-card">
+        <h4>Authors</h4>
+        <ul>
+          <li>Nuñez, Cristian</li>
+          <li>Moreno, Jose</li>
+          <li>Valdez, Juan</li>
+          <li><strong style="color:var(--text);">Quiroga, Jose</strong></li>
+          <li>Pacheco, Jesus</li>
+          <li>Benitez, Victor H.</li>
+        </ul>
+      </div>
+      <div class="sidebar-card">
+        <h4>Other Projects</h4>
+        <div class="sidebar-nav">
+          <a href="plant-disease.html">← Plant Disease CNN</a>
+          <a href="satellite.html">Satellite Segmentation →</a>
+        </div>
+      </div>
+      <a href="../projects.html" class="btn btn-outline">← Back to Projects</a>
+    </aside>
+  </div>
+
+  <div class="project-nav">
+    <a href="plant-disease.html" class="proj-nav-card">
+      <span class="proj-nav-label">← Previous Project</span>
+      <span class="proj-nav-title">Plant Disease Classification using Neural Networks</span>
+    </a>
+    <a href="satellite.html" class="proj-nav-card next">
+      <span class="proj-nav-label">Next Project →</span>
+      <span class="proj-nav-title">Land Cover Classification via Satellite Image Segmentation</span>
+    </a>
+  </div>
+
+  <footer>
+    <p>© 2025 Jose Quiroga</p>
+    <div class="footer-links">
+      <a href="../projects.html">Projects</a>
+      <a href="../about.html">About</a>
+      <a href="../resume.html">Resume</a>
+      <a href="https://www.linkedin.com/in/josefquiroga/" target="_blank">LinkedIn</a>
+      <a href="/cdn-cgi/l/email-protection#fb9194889e9dd58a8e9289949c9abb9c969a9297d5989496">Email</a>
+    </div>
+  </footer>
+
+  <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+    const reveals = document.querySelectorAll('.reveal');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((e, i) => { if (e.isIntersecting) { setTimeout(() => e.target.classList.add('visible'), 100 * i); } } );
+    });
+    reveals.forEach(el => observer.observe(el));
+  </script>

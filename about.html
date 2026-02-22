@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>About — Jose Quiroga</title>
+  <meta name="description" content="About Jose Quiroga — Data Scientist with a Mechatronics Engineering background based in Sydney, Australia." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@300;400;500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #0a0f0d; --surface: #111a15; --card: #162019;
+      --accent: #4ade80; --accent2: #86efac; --text: #e8f5ee;
+      --muted: #7a9e87; --border: #1e3527;
+      --serif: 'DM Serif Display', serif;
+      --mono: 'DM Mono', monospace;
+      --sans: 'DM Sans', sans-serif;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { background: var(--bg); color: var(--text); font-family: var(--sans); font-weight: 300; overflow-x: hidden; }
+
+    nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; justify-content: space-between; align-items: center; padding: 1.2rem 3rem; background: rgba(10,15,13,0.88); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); }
+    .nav-logo { font-family: var(--mono); font-size: 0.85rem; color: var(--accent); letter-spacing: 0.05em; text-decoration: none; }
+    .nav-links { display: flex; gap: 2.5rem; list-style: none; }
+    .nav-links a { font-family: var(--mono); font-size: 0.78rem; color: var(--muted); text-decoration: none; letter-spacing: 0.08em; text-transform: uppercase; transition: color 0.2s; }
+    .nav-links a:hover, .nav-links a.active { color: var(--accent); }
+
+    .page-hero { padding: 10rem 3rem 5rem; border-bottom: 1px solid var(--border); position: relative; overflow: hidden; }
+    .hero-grid { position: absolute; inset: 0; background-image: linear-gradient(rgba(74,222,128,0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(74,222,128,0.04) 1px, transparent 1px); background-size: 60px 60px; mask-image: radial-gradient(ellipse 70% 80% at 15% 50%, black, transparent); pointer-events: none; }
+    .page-tag { font-family: var(--mono); font-size: 0.75rem; color: var(--accent); letter-spacing: 0.15em; text-transform: uppercase; margin-bottom: 1rem; opacity:0; animation: fadeUp 0.7s 0.2s forwards; }
+    .page-title { font-family: var(--serif); font-size: clamp(2.8rem,6vw,5rem); line-height: 1.1; color: var(--text); opacity:0; animation: fadeUp 0.7s 0.4s forwards; }
+    .page-title em { font-style: italic; color: var(--accent); }
+    .page-sub { margin-top: 1.2rem; color: var(--muted); max-width: 520px; line-height: 1.8; font-size: 1rem; opacity:0; animation: fadeUp 0.7s 0.6s forwards; }
+
+    main { max-width: 1100px; margin: 0 auto; padding: 5rem 3rem; display: flex; flex-direction: column; gap: 5rem; }
+
+    /* Bio section */
+    .bio-grid { display: grid; grid-template-columns: 3fr 2fr; gap: 4rem; align-items: start; }
+    .bio-text p { color: var(--muted); line-height: 1.9; font-size: 1rem; margin-bottom: 1.3rem; }
+    .bio-text p strong { color: var(--text); font-weight: 500; }
+    .bio-text .ctas { display: flex; gap: 1rem; margin-top: 2rem; flex-wrap: wrap; }
+
+    .bio-sidebar { display: flex; flex-direction: column; gap: 1.2rem; }
+    .info-card { background: var(--card); border: 1px solid var(--border); border-radius: 4px; padding: 1.5rem; }
+    .info-card h4 { font-family: var(--mono); font-size: 0.7rem; color: var(--accent); letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 0.9rem; }
+    .info-card ul { list-style: none; }
+    .info-card ul li { color: var(--muted); font-size: 0.9rem; line-height: 1.7; padding-left: 1rem; position: relative; }
+    .info-card ul li::before { content: '→'; position: absolute; left: 0; color: var(--accent); font-family: var(--mono); font-size: 0.75rem; }
+    .info-card p { color: var(--muted); font-size: 0.9rem; line-height: 1.7; }
+
+    /* Timeline */
+    .section-label { font-family: var(--mono); font-size: 0.73rem; color: var(--accent); letter-spacing: 0.15em; text-transform: uppercase; margin-bottom: 0.8rem; }
+    .section-title { font-family: var(--serif); font-size: clamp(1.6rem,3vw,2.4rem); color: var(--text); margin-bottom: 2.5rem; }
+
+    .timeline { display: flex; flex-direction: column; gap: 0; border-left: 1px solid var(--border); padding-left: 2rem; margin-left: 0.5rem; }
+    .timeline-item { position: relative; padding-bottom: 2.5rem; }
+    .timeline-item:last-child { padding-bottom: 0; }
+    .timeline-dot { position: absolute; left: -2.55rem; top: 0.35rem; width: 10px; height: 10px; border-radius: 50%; background: var(--accent); border: 2px solid var(--bg); }
+    .timeline-date { font-family: var(--mono); font-size: 0.72rem; color: var(--accent); letter-spacing: 0.1em; margin-bottom: 0.4rem; }
+    .timeline-title { font-family: var(--serif); font-size: 1.2rem; color: var(--text); margin-bottom: 0.2rem; }
+    .timeline-sub { font-family: var(--mono); font-size: 0.78rem; color: var(--muted); margin-bottom: 0.6rem; }
+    .timeline-desc { color: var(--muted); font-size: 0.9rem; line-height: 1.7; max-width: 600px; }
+
+    /* Interests */
+    .interests-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; }
+    .interest-card { background: var(--card); border: 1px solid var(--border); border-radius: 4px; padding: 1.5rem; transition: border-color 0.2s, transform 0.2s; }
+    .interest-card:hover { border-color: rgba(74,222,128,0.35); transform: translateY(-2px); }
+    .interest-icon { font-size: 1.5rem; margin-bottom: 0.8rem; }
+    .interest-card h4 { font-family: var(--serif); font-size: 1rem; color: var(--text); margin-bottom: 0.4rem; }
+    .interest-card p { font-size: 0.85rem; color: var(--muted); line-height: 1.6; }
+
+    .btn { display: inline-block; padding: 0.75rem 1.8rem; font-family: var(--mono); font-size: 0.8rem; letter-spacing: 0.05em; text-decoration: none; border-radius: 2px; transition: all 0.2s; }
+    .btn-primary { background: var(--accent); color: var(--bg); font-weight: 500; }
+    .btn-primary:hover { background: var(--accent2); transform: translateY(-1px); }
+    .btn-outline { border: 1px solid var(--border); color: var(--muted); }
+    .btn-outline:hover { border-color: var(--accent); color: var(--accent); }
+
+    footer { border-top: 1px solid var(--border); padding: 2rem 3rem; display: flex; justify-content: space-between; align-items: center; }
+    footer p { font-family: var(--mono); font-size: 0.72rem; color: var(--muted); }
+    .footer-links { display: flex; gap: 1.5rem; }
+    .footer-links a { font-family: var(--mono); font-size: 0.72rem; color: var(--muted); text-decoration: none; transition: color 0.2s; }
+    .footer-links a:hover { color: var(--accent); }
+
+    .reveal { opacity: 0; transform: translateY(20px); transition: opacity 0.6s, transform 0.6s; }
+    .reveal.visible { opacity: 1; transform: none; }
+    @keyframes fadeUp { from { opacity:0; transform: translateY(18px); } to { opacity:1; transform: none; } }
+
+    @media (max-width: 768px) {
+      nav { padding: 1rem 1.5rem; } .nav-links { gap: 1rem; }
+      .page-hero { padding: 8rem 1.5rem 3rem; }
+      main { padding: 3rem 1.5rem; gap: 3.5rem; }
+      .bio-grid { grid-template-columns: 1fr; gap: 2rem; }
+      .interests-grid { grid-template-columns: 1fr; }
+      footer { flex-direction: column; gap: 1rem; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a href="index.html" class="nav-logo">jose.quiroga</a>
+    <ul class="nav-links">
+      <li><a href="index.html">Projects</a></li>
+      <li><a href="about.html" class="active">About</a></li>
+      <li><a href="skills.html">Skills</a></li>
+      <li><a href="publications.html">Publications</a></li>
+      <li><a href="https://www.linkedin.com/in/josefquiroga/" target="_blank">LinkedIn ↗</a></li>
+      <li><a href="https://github.com/josefquiroga" target="_blank">GitHub ↗</a></li>
+    </ul>
+  </nav>
+
+  <div class="page-hero">
+    <div class="hero-grid"></div>
+    <p class="page-tag">About me</p>
+    <h1 class="page-title">Engineer by training,<br /><em>data scientist</em> by practice.</h1>
+    <p class="page-sub">I build ML models and data pipelines that solve real problems. Here's the story of how I got here.</p>
+  </div>
+
+  <main>
+
+    <!-- BIO -->
+    <div class="bio-grid">
+      <div class="bio-text reveal">
+        <p>
+          I'm <strong>Jose Quiroga</strong>, a Data Scientist currently working at <strong>DataMesh Group</strong> in Sydney. My path into data science wasn't a straight line — it started with a BSc in <strong>Mechatronics Engineering</strong> at ITESM in Mexico (with a study abroad year at the Polytechnic University of Milan), which gave me a deep appreciation for how physical systems work and how data can make them smarter.
+        </p>
+        <p>
+          From there I moved into automation engineering at <strong>Ford Motor Company</strong> in Hermosillo, where I used real-time data to hit production targets and reduce equipment downtime. That experience showed me how impactful data could be at scale — and pushed me to go deeper. I moved to Sydney to pursue an <strong>MSc in Data Science and Innovation at UTS</strong>, alongside an <strong>MEng in AI and IoT</strong>, and haven't looked back since.
+        </p>
+        <p>
+          Today I work across the full data science lifecycle — from designing ELT pipelines on GCP to building and deploying predictive models that directly influence business decisions. I've delivered a <strong>47% reduction in cloud infrastructure costs</strong> and a <strong>90% reduction in critical data errors</strong> in my current role. I care about work that is technically rigorous and genuinely useful.
+        </p>
+        <p>
+          I'm fluent in <strong>Spanish</strong> (native), <strong>English</strong>, and <strong>Italian</strong> (B2), and I've lived and worked across three countries. That international perspective shapes how I approach problems and how I communicate across teams.
+        </p>
+        <div class="ctas">
+          <a href="index.html" class="btn btn-primary">View my projects</a>
+          <a href="https://www.linkedin.com/in/josefquiroga/" class="btn btn-outline" target="_blank">LinkedIn ↗</a>
+        </div>
+      </div>
+      <div class="bio-sidebar reveal">
+        <div class="info-card">
+          <h4>Currently</h4>
+          <ul>
+            <li>Data Scientist at DataMesh Group, Sydney</li>
+            <li>Open to new roles in Sydney & remote US positions</li>
+          </ul>
+        </div>
+        <div class="info-card">
+          <h4>Based in</h4>
+          <p>Sydney, NSW, Australia</p>
+        </div>
+        <div class="info-card">
+          <h4>Languages spoken</h4>
+          <ul>
+            <li>Spanish — Native</li>
+            <li>English — Professional</li>
+            <li>Italian — B2 (PLIDA certified)</li>
+          </ul>
+        </div>
+        <div class="info-card">
+          <h4>Contact</h4>
+          <p><a href="mailto:josef.quiroga@gmail.com" style="color:var(--accent); text-decoration:none;">josef.quiroga@gmail.com</a></p>
+        </div>
+      </div>
+    </div>
+
+    <!-- EDUCATION TIMELINE -->
+    <div>
+      <p class="section-label reveal">Academic background</p>
+      <h2 class="section-title reveal">Education</h2>
+      <div class="timeline reveal">
+        <div class="timeline-item">
+          <div class="timeline-dot"></div>
+          <p class="timeline-date">Jan 2022 — Dec 2023</p>
+          <h3 class="timeline-title">MSc. Data Science and Innovation</h3>
+          <p class="timeline-sub">University of Technology Sydney (UTS)</p>
+          <p class="timeline-desc">Focused on machine learning, data engineering, and the application of AI to real-world business problems. First place in the UTS Consulting Cup.</p>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-dot"></div>
+          <p class="timeline-date">Jan 2020 — Aug 2023</p>
+          <h3 class="timeline-title">MEng. Artificial Intelligence and Internet of Things</h3>
+          <p class="timeline-sub">University of Sonora — completed concurrently with MSc</p>
+          <p class="timeline-desc">Advanced study of AI systems and IoT architectures, resulting in an IEEE-published paper on autonomic computing applied to smart agriculture.</p>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-dot"></div>
+          <p class="timeline-date">Jan 2012 — Dec 2018</p>
+          <h3 class="timeline-title">BSc. Mechatronics Engineering</h3>
+          <p class="timeline-sub">Monterrey Institute of Technology and Higher Education (ITESM)</p>
+          <p class="timeline-desc">Core engineering foundations across electronics, robotics, and control systems. Included a study abroad year at the Polytechnic University of Milan, Italy.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- AREAS OF INTEREST -->
+    <div>
+      <p class="section-label reveal">What I care about</p>
+      <h2 class="section-title reveal">Areas of Interest</h2>
+      <div class="interests-grid">
+        <div class="interest-card reveal">
+          <div class="interest-icon">🤖</div>
+          <h4>Machine Learning & MLOps</h4>
+          <p>Building models that work in production — not just notebooks. End-to-end pipelines, monitoring, and retraining at scale.</p>
+        </div>
+        <div class="interest-card reveal">
+          <div class="interest-icon">☁️</div>
+          <h4>Cloud Data Engineering</h4>
+          <p>Designing scalable ELT pipelines and data infrastructure on GCP and AWS that underpin reliable analytics.</p>
+        </div>
+        <div class="interest-card reveal">
+          <div class="interest-icon">👁️</div>
+          <h4>Computer Vision</h4>
+          <p>Applying neural networks to visual data — from plant disease detection to satellite image segmentation.</p>
+        </div>
+        <div class="interest-card reveal">
+          <div class="interest-icon">🌱</div>
+          <h4>AI for Sustainability</h4>
+          <p>Using data and automation to solve environmental problems — smart agriculture, resource optimisation, and more.</p>
+        </div>
+        <div class="interest-card reveal">
+          <div class="interest-icon">🔗</div>
+          <h4>IoT & Physical Systems</h4>
+          <p>The intersection of data and hardware — a thread running from my engineering roots through to my IoT research.</p>
+        </div>
+        <div class="interest-card reveal">
+          <div class="interest-icon">📊</div>
+          <h4>Data Storytelling</h4>
+          <p>Translating complex analysis into clear business decisions. Dashboards, visualisations, and executive communication.</p>
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <footer>
+    <p>© 2025 Jose Quiroga</p>
+    <div class="footer-links">
+      <a href="https://www.linkedin.com/in/josefquiroga/" target="_blank">LinkedIn</a>
+      <a href="https://github.com/josefquiroga" target="_blank">GitHub</a>
+      <a href="mailto:josef.quiroga@gmail.com">Email</a>
+    </div>
+  </footer>
+
+  <script>
+    const reveals = document.querySelectorAll('.reveal');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((e, i) => { if (e.isIntersecting) { setTimeout(() => e.target.classList.add('visible'), i * 80); observer.unobserve(e.target); } });
+    }, { threshold: 0.08 });
+    reveals.forEach(el => observer.observe(el));
+  </script>
+</body>
+</html>

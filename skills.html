@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Skills & Tools — Jose Quiroga</title>
+  <meta name="description" content="Technical skills and tools used by Jose Quiroga — Data Scientist in Sydney." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@300;400;500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #0a0f0d; --surface: #111a15; --card: #162019;
+      --accent: #4ade80; --accent2: #86efac; --text: #e8f5ee;
+      --muted: #7a9e87; --border: #1e3527;
+      --serif: 'DM Serif Display', serif; --mono: 'DM Mono', monospace; --sans: 'DM Sans', sans-serif;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { background: var(--bg); color: var(--text); font-family: var(--sans); font-weight: 300; overflow-x: hidden; }
+
+    nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; justify-content: space-between; align-items: center; padding: 1.2rem 3rem; background: rgba(10,15,13,0.88); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); }
+    .nav-logo { font-family: var(--mono); font-size: 0.85rem; color: var(--accent); letter-spacing: 0.05em; text-decoration: none; }
+    .nav-links { display: flex; gap: 2.5rem; list-style: none; }
+    .nav-links a { font-family: var(--mono); font-size: 0.78rem; color: var(--muted); text-decoration: none; letter-spacing: 0.08em; text-transform: uppercase; transition: color 0.2s; }
+    .nav-links a:hover, .nav-links a.active { color: var(--accent); }
+
+    .page-hero { padding: 10rem 3rem 5rem; border-bottom: 1px solid var(--border); position: relative; overflow: hidden; }
+    .hero-grid { position: absolute; inset: 0; background-image: linear-gradient(rgba(74,222,128,0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(74,222,128,0.04) 1px, transparent 1px); background-size: 60px 60px; mask-image: radial-gradient(ellipse 70% 80% at 15% 50%, black, transparent); pointer-events: none; }
+    .page-tag { font-family: var(--mono); font-size: 0.75rem; color: var(--accent); letter-spacing: 0.15em; text-transform: uppercase; margin-bottom: 1rem; opacity:0; animation: fadeUp 0.7s 0.2s forwards; }
+    .page-title { font-family: var(--serif); font-size: clamp(2.8rem,6vw,5rem); line-height: 1.1; color: var(--text); opacity:0; animation: fadeUp 0.7s 0.4s forwards; }
+    .page-title em { font-style: italic; color: var(--accent); }
+    .page-sub { margin-top: 1.2rem; color: var(--muted); max-width: 520px; line-height: 1.8; opacity:0; animation: fadeUp 0.7s 0.6s forwards; }
+
+    main { max-width: 1100px; margin: 0 auto; padding: 5rem 3rem; display: flex; flex-direction: column; gap: 4.5rem; }
+
+    .section-label { font-family: var(--mono); font-size: 0.73rem; color: var(--accent); letter-spacing: 0.15em; text-transform: uppercase; margin-bottom: 0.8rem; }
+    .section-title { font-family: var(--serif); font-size: clamp(1.6rem,3vw,2.2rem); color: var(--text); margin-bottom: 2rem; }
+
+    /* Skill categories */
+    .skills-categories { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.5rem; }
+    .skill-category { background: var(--card); border: 1px solid var(--border); border-radius: 4px; padding: 2rem; transition: border-color 0.25s; }
+    .skill-category:hover { border-color: rgba(74,222,128,0.3); }
+    .category-icon { font-size: 1.4rem; margin-bottom: 0.8rem; }
+    .category-name { font-family: var(--mono); font-size: 0.72rem; color: var(--accent); letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 1.2rem; }
+    .tags { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+    .tag { font-family: var(--mono); font-size: 0.72rem; padding: 0.3rem 0.75rem; border: 1px solid var(--border); border-radius: 2px; color: var(--muted); letter-spacing: 0.04em; transition: all 0.2s; }
+    .tag:hover { border-color: var(--accent); color: var(--accent); }
+    .tag.highlight { border-color: rgba(74,222,128,0.3); color: var(--accent2); background: rgba(74,222,128,0.05); }
+
+    /* Proficiency bars */
+    .proficiency-list { display: flex; flex-direction: column; gap: 1.2rem; }
+    .prof-item { display: flex; flex-direction: column; gap: 0.4rem; }
+    .prof-header { display: flex; justify-content: space-between; align-items: baseline; }
+    .prof-name { font-family: var(--mono); font-size: 0.82rem; color: var(--text); }
+    .prof-pct { font-family: var(--mono); font-size: 0.72rem; color: var(--muted); }
+    .prof-bar { height: 3px; background: var(--border); border-radius: 2px; overflow: hidden; }
+    .prof-fill { height: 100%; background: linear-gradient(90deg, var(--accent), var(--accent2)); border-radius: 2px; width: 0; transition: width 1.2s cubic-bezier(0.4,0,0.2,1); }
+
+    /* Experience timeline */
+    .exp-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; }
+    .exp-card { background: var(--card); border: 1px solid var(--border); border-radius: 4px; padding: 1.5rem; text-align: center; }
+    .exp-num { font-family: var(--serif); font-size: 2.5rem; color: var(--accent); display: block; margin-bottom: 0.3rem; }
+    .exp-label { font-family: var(--mono); font-size: 0.7rem; color: var(--muted); letter-spacing: 0.1em; text-transform: uppercase; }
+
+    footer { border-top: 1px solid var(--border); padding: 2rem 3rem; display: flex; justify-content: space-between; align-items: center; }
+    footer p { font-family: var(--mono); font-size: 0.72rem; color: var(--muted); }
+    .footer-links { display: flex; gap: 1.5rem; }
+    .footer-links a { font-family: var(--mono); font-size: 0.72rem; color: var(--muted); text-decoration: none; transition: color 0.2s; }
+    .footer-links a:hover { color: var(--accent); }
+
+    .reveal { opacity: 0; transform: translateY(20px); transition: opacity 0.6s, transform 0.6s; }
+    .reveal.visible { opacity: 1; transform: none; }
+    @keyframes fadeUp { from { opacity:0; transform: translateY(18px); } to { opacity:1; transform: none; } }
+
+    @media (max-width: 768px) {
+      nav { padding: 1rem 1.5rem; } .nav-links { gap: 1rem; }
+      .page-hero { padding: 8rem 1.5rem 3rem; }
+      main { padding: 3rem 1.5rem; }
+      .skills-categories { grid-template-columns: 1fr; }
+      .exp-grid { grid-template-columns: 1fr; }
+      footer { flex-direction: column; gap: 1rem; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a href="index.html" class="nav-logo">jose.quiroga</a>
+    <ul class="nav-links">
+      <li><a href="index.html">Projects</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="skills.html" class="active">Skills</a></li>
+      <li><a href="publications.html">Publications</a></li>
+      <li><a href="https://www.linkedin.com/in/josefquiroga/" target="_blank">LinkedIn ↗</a></li>
+      <li><a href="https://github.com/josefquiroga" target="_blank">GitHub ↗</a></li>
+    </ul>
+  </nav>
+
+  <div class="page-hero">
+    <div class="hero-grid"></div>
+    <p class="page-tag">Technical expertise</p>
+    <h1 class="page-title">Skills &<br /><em>Tools</em></h1>
+    <p class="page-sub">A breakdown of the technologies, platforms, and approaches I use to build data science solutions from ingestion to production.</p>
+  </div>
+
+  <main>
+
+    <!-- QUICK STATS -->
+    <div class="reveal">
+      <p class="section-label">At a glance</p>
+      <div class="exp-grid">
+        <div class="exp-card">
+          <span class="exp-num">3+</span>
+          <span class="exp-label">Years in production DS</span>
+        </div>
+        <div class="exp-card">
+          <span class="exp-num">10+</span>
+          <span class="exp-label">Tools & platforms</span>
+        </div>
+        <div class="exp-card">
+          <span class="exp-num">3</span>
+          <span class="exp-label">Languages spoken</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- SKILL CATEGORIES -->
+    <div>
+      <p class="section-label reveal">Technical stack</p>
+      <h2 class="section-title reveal">Skills & Tools</h2>
+      <div class="skills-categories">
+
+        <div class="skill-category reveal">
+          <div class="category-icon">🐍</div>
+          <p class="category-name">Programming Languages</p>
+          <div class="tags">
+            <span class="tag highlight">Python</span>
+            <span class="tag highlight">SQL</span>
+            <span class="tag">R</span>
+            <span class="tag">Bash</span>
+          </div>
+        </div>
+
+        <div class="skill-category reveal">
+          <div class="category-icon">🧠</div>
+          <p class="category-name">ML & Data Science</p>
+          <div class="tags">
+            <span class="tag highlight">Scikit-learn</span>
+            <span class="tag highlight">TensorFlow</span>
+            <span class="tag highlight">Pandas</span>
+            <span class="tag">NumPy</span>
+            <span class="tag">OpenCV</span>
+            <span class="tag">Keras</span>
+            <span class="tag">SARIMA</span>
+          </div>
+        </div>
+
+        <div class="skill-category reveal">
+          <div class="category-icon">☁️</div>
+          <p class="category-name">Cloud & Data Engineering</p>
+          <div class="tags">
+            <span class="tag highlight">GCP</span>
+            <span class="tag highlight">BigQuery</span>
+            <span class="tag highlight">Apache Beam</span>
+            <span class="tag">Cloud Run</span>
+            <span class="tag">GCS</span>
+            <span class="tag highlight">AWS Lambda</span>
+            <span class="tag">Athena</span>
+            <span class="tag">S3</span>
+            <span class="tag">SES</span>
+          </div>
+        </div>
+
+        <div class="skill-category reveal">
+          <div class="category-icon">📊</div>
+          <p class="category-name">Visualisation & BI</p>
+          <div class="tags">
+            <span class="tag highlight">Tableau</span>
+            <span class="tag">Power BI</span>
+            <span class="tag">Matplotlib</span>
+            <span class="tag">Seaborn</span>
+            <span class="tag">Salesforce</span>
+          </div>
+        </div>
+
+        <div class="skill-category reveal">
+          <div class="category-icon">🛠️</div>
+          <p class="category-name">Dev Tools & MLOps</p>
+          <div class="tags">
+            <span class="tag highlight">Docker</span>
+            <span class="tag highlight">Git</span>
+            <span class="tag">GitHub Actions</span>
+            <span class="tag">VS Code</span>
+            <span class="tag">Jupyter</span>
+          </div>
+        </div>
+
+        <div class="skill-category reveal">
+          <div class="category-icon">🤝</div>
+          <p class="category-name">Business & Soft Skills</p>
+          <div class="tags">
+            <span class="tag">Data Storytelling</span>
+            <span class="tag">Project Management</span>
+            <span class="tag">Client Engagement</span>
+            <span class="tag">Technical Writing</span>
+            <span class="tag">Financial Data</span>
+            <span class="tag">AI Ethics</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- PROFICIENCY -->
+    <div>
+      <p class="section-label reveal">Proficiency</p>
+      <h2 class="section-title reveal">Key Languages & Platforms</h2>
+      <div class="proficiency-list reveal" id="profList">
+        <div class="prof-item">
+          <div class="prof-header"><span class="prof-name">Python</span><span class="prof-pct">95%</span></div>
+          <div class="prof-bar"><div class="prof-fill" data-width="95"></div></div>
+        </div>
+        <div class="prof-item">
+          <div class="prof-header"><span class="prof-name">SQL (BigQuery / Athena)</span><span class="prof-pct">90%</span></div>
+          <div class="prof-bar"><div class="prof-fill" data-width="90"></div></div>
+        </div>
+        <div class="prof-item">
+          <div class="prof-header"><span class="prof-name">GCP (BigQuery, Beam, Cloud Run)</span><span class="prof-pct">85%</span></div>
+          <div class="prof-bar"><div class="prof-fill" data-width="85"></div></div>
+        </div>
+        <div class="prof-item">
+          <div class="prof-header"><span class="prof-name">Machine Learning (Scikit-learn, TensorFlow)</span><span class="prof-pct">85%</span></div>
+          <div class="prof-bar"><div class="prof-fill" data-width="85"></div></div>
+        </div>
+        <div class="prof-item">
+          <div class="prof-header"><span class="prof-name">Tableau / BI Tools</span><span class="prof-pct">80%</span></div>
+          <div class="prof-bar"><div class="prof-fill" data-width="80"></div></div>
+        </div>
+        <div class="prof-item">
+          <div class="prof-header"><span class="prof-name">AWS (Lambda, Athena, S3)</span><span class="prof-pct">75%</span></div>
+          <div class="prof-bar"><div class="prof-fill" data-width="75"></div></div>
+        </div>
+        <div class="prof-item">
+          <div class="prof-header"><span class="prof-name">R</span><span class="prof-pct">65%</span></div>
+          <div class="prof-bar"><div class="prof-fill" data-width="65"></div></div>
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <footer>
+    <p>© 2025 Jose Quiroga</p>
+    <div class="footer-links">
+      <a href="https://www.linkedin.com/in/josefquiroga/" target="_blank">LinkedIn</a>
+      <a href="https://github.com/josefquiroga" target="_blank">GitHub</a>
+      <a href="mailto:josef.quiroga@gmail.com">Email</a>
+    </div>
+  </footer>
+
+  <script>
+    const reveals = document.querySelectorAll('.reveal');
+    const bars = document.querySelectorAll('.prof-fill');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((e, i) => {
+        if (e.isIntersecting) {
+          setTimeout(() => e.target.classList.add('visible'), i * 80);
+          observer.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.08 });
+    reveals.forEach(el => observer.observe(el));
+
+    // Animate bars when proficiency section enters view
+    const barObserver = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          bars.forEach(bar => { bar.style.width = bar.dataset.width + '%'; });
+          barObserver.disconnect();
+        }
+      });
+    }, { threshold: 0.2 });
+    const profList = document.getElementById('profList');
+    if (profList) barObserver.observe(profList);
+  </script>
+</body>
+</html>
