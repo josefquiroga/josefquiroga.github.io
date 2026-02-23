@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Projects — Jose Quiroga</title>
-  <meta name="description" content="Data science and ML projects by Jose Quiroga — CNN image classification, IoT systems, satellite segmentation." />
+  <meta name="description" content="Data science and ML projects by Jose Quiroga — CNN image classification, IoT systems, satellite segmentation, and RFM customer segmentation." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@300;400;500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
   <style>
@@ -203,10 +203,33 @@
         <a href="projects/satellite.html" class="project-link">View Project ↗</a>
       </div>
 
+      <!-- Project 4 -->
+      <div class="project-card reveal" style="background: linear-gradient(135deg, #162019 0%, #0f1f14 100%); border-color: rgba(74,222,128,0.2);">
+        <div>
+          <span class="featured-badge" style="background: linear-gradient(90deg, #4ade80, #60a5fa); color: #0a0f0d;">MSc Thesis</span>
+          <p class="project-num">04</p>
+          <h3 class="project-title">RFM Customer Segmentation & Behavioural Cohort Discovery</h3>
+          <p class="project-desc">
+            End-to-end ML pipeline built on real Australian payment transaction data at DataMesh Group. Applied <strong>K-Means clustering to normalised RFM vectors</strong> to automatically discover five interpretable customer cohorts — including "Tradies" (early morning energy drink & meat pie buyers), "Young Professionals" (petrol + restaurants), and "Budget Families" (fast food regulars). Full stack: AWS → Python pipeline → PostgreSQL → Node.js API → React dashboard. Features an <strong>interactive spinning 3D cluster visualisation</strong>.
+          </p>
+          <div class="project-tags">
+            <span class="project-tag">K-Means Clustering</span>
+            <span class="project-tag">RFM Analysis</span>
+            <span class="project-tag">Customer Segmentation</span>
+            <span class="project-tag">Python</span>
+            <span class="project-tag">PostgreSQL</span>
+            <span class="project-tag">Node.js API</span>
+            <span class="project-tag">React</span>
+            <span class="project-tag">Fintech</span>
+          </div>
+        </div>
+        <a href="projects/rfm-segmentation.html" class="project-link" style="border-color: rgba(74,222,128,0.4); color: var(--accent);">View Project ↗</a>
+      </div>
+
     </div>
 
     <div class="coming-card reveal">
-      <p><strong>More projects coming soon.</strong><br />Currently working on Gen AI and MLOps projects. Check back or follow on <a href="https://github.com/josefquiroga" target="_blank" style="color:var(--accent); text-decoration:none;">GitHub ↗</a> for updates.</p>
+      <p><strong>More projects coming soon.</strong><br />Currently working on Gen AI and LLM projects. Check back or follow on <a href="https://github.com/josefquiroga" target="_blank" style="color:var(--accent); text-decoration:none;">GitHub ↗</a> for updates.</p>
     </div>
 
   </main>
@@ -221,16 +244,13 @@
       <a href="resume.html">Resume</a>
       <a href="https://www.linkedin.com/in/josefquiroga/" target="_blank">LinkedIn</a>
       <a href="https://github.com/josefquiroga" target="_blank">GitHub</a>
-      <a href="/cdn-cgi/l/email-protection#d2b8bda1b7b4fca3a7bba0bdb5b392b5bfb3bbbefcb1bdbf">Email</a>
+      <a href="mailto:josef.quiroga@gmail.com">Email</a>
     </div>
   </footer>
 
-  <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+  <script>
     const reveals = document.querySelectorAll('.reveal');
     const observer = new IntersectionObserver((entries) => {
-      entries.forEach((e, i) => { if (e.isIntersecting) { setTimeout(() => e.target.classList.add('visible'), 100 * i); } } );
-    });
-    reveals.forEach(el => observer.observe(el));
-  </script>
-</body>
-</html>
+      entries.forEach((e, i) => { if (e.isIntersecting) { setTimeout(() => e.target.classList.add('visible'), i * 150); } });
+    }, { threshold: 0.1 });
+    reveals.forEach(r => observer.observe(r));

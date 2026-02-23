@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>RFM Customer Clusters — Interactive 3D</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: #0a0f0d; font-family: 'DM Mono', monospace; overflow: hidden; width: 100vw; height: 100vh; }
+
+  canvas { display: block; }
+
+  .ui { position: absolute; inset: 0; pointer-events: none; }
+
+  .title-block {
+    position: absolute; top: 2rem; left: 2rem;
+  }
+  .eyebrow { font-size: 0.65rem; color: #4ade80; letter-spacing: 0.18em; text-transform: uppercase; margin-bottom: 0.4rem; }
+  .title { font-size: 1.1rem; color: #e8f5ee; letter-spacing: 0.05em; }
+  .subtitle { font-size: 0.72rem; color: #7a9e87; margin-top: 0.25rem; letter-spacing: 0.05em; }
+
+  .legend {
+    position: absolute; bottom: 2rem; left: 2rem;
+    display: flex; flex-direction: column; gap: 0.6rem;
+  }
+  .legend-item { display: flex; align-items: flex-start; gap: 0.75rem; }
+  .legend-dot {
+    width: 10px; height: 10px; border-radius: 50%; margin-top: 3px; flex-shrink: 0;
+    box-shadow: 0 0 8px currentColor;
+  }
+  .legend-text { }
+  .legend-name { font-size: 0.72rem; color: #e8f5ee; letter-spacing: 0.05em; }
+  .legend-desc { font-size: 0.62rem; color: #7a9e87; margin-top: 0.1rem; max-width: 220px; line-height: 1.5; }
+
+  .axes-info {
+    position: absolute; bottom: 2rem; right: 2rem; text-align: right;
+  }
+  .axes-info p { font-size: 0.62rem; color: #3d6b50; letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 0.3rem; }
+
+  .drag-hint {
+    position: absolute; top: 2rem; right: 2rem;
+    font-size: 0.62rem; color: #3d6b50; letter-spacing: 0.08em; text-transform: uppercase;
+    pointer-events: none;
+  }
+
+  .stat-strip {
+    position: absolute; top: 50%; right: 2rem; transform: translateY(-50%);
+    display: flex; flex-direction: column; gap: 1.2rem;
+  }
+  .stat { text-align: right; }
+  .stat-num { font-size: 1.4rem; color: #4ade80; display: block; }
+  .stat-label { font-size: 0.6rem; color: #3d6b50; letter-spacing: 0.1em; text-transform: uppercase; }
+</style>
+</head>
+<body>
+<canvas id="c"></canvas>
+
+<div class="ui">
+  <div class="title-block">
+    <p class="eyebrow">K-Means Clustering · RFM Space</p>
+    <p class="title">Customer Behavioural Cohorts</p>
+    <p class="subtitle">Australian Payment Transaction Data · DataMesh Group</p>
+  </div>
+
+  <div class="drag-hint">drag to rotate · scroll to zoom</div>
+
+  <div class="stat-strip">
+    <div class="stat">
+      <span class="stat-num">2,107</span>
+      <span class="stat-label">Segments</span>
+    </div>
+    <div class="stat">
+      <span class="stat-num">5</span>
+      <span class="stat-label">Cohorts</span>
+    </div>
+    <div class="stat">
+      <span class="stat-num">3D</span>
+      <span class="stat-label">RFM Space</span>
+    </div>
+  </div>
+
+  <div class="legend">
+    <div class="legend-item">
+      <div class="legend-dot" style="background:#4ade80; color:#4ade80;"></div>
+      <div class="legend-text">
+        <div class="legend-name">Tradies</div>
+        <div class="legend-desc">Early morning buyers — energy drinks, meat pies, hardware. High frequency, low monetary.</div>
+      </div>
+    </div>
+    <div class="legend-item">
+      <div class="legend-dot" style="background:#60a5fa; color:#60a5fa;"></div>
+      <div class="legend-text">
+        <div class="legend-name">Young Professionals</div>
+        <div class="legend-desc">Petrol + restaurants, gym, cafés. High recency, high monetary, moderate frequency.</div>
+      </div>
+    </div>
+    <div class="legend-item">
+      <div class="legend-dot" style="background:#f59e0b; color:#f59e0b;"></div>
+      <div class="legend-text">
+        <div class="legend-name">Budget Families</div>
+        <div class="legend-desc">Petrol + fast food, supermarkets. High frequency, medium monetary, low recency.</div>
+      </div>
+    </div>
+    <div class="legend-item">
+      <div class="legend-dot" style="background:#e879f9; color:#e879f9;"></div>
+      <div class="legend-text">
+        <div class="legend-name">Occasional Shoppers</div>
+        <div class="legend-desc">Low frequency, variable spend. Intermittent transaction patterns.</div>
+      </div>
+    </div>
+    <div class="legend-item">
+      <div class="legend-dot" style="background:#f87171; color:#f87171;"></div>
+      <div class="legend-text">
+        <div class="legend-name">High-Value Loyalists</div>
+        <div class="legend-desc">Consistent, high-spend customers. Top RFM scores across all three dimensions.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="axes-info">
+    <p>X — Recency</p>
+    <p>Y — Monetary</p>
+    <p>Z — Frequency</p>
+  </div>
+</div>
+
+<script>
+const canvas = document.getElementById('c');
+const ctx = canvas.getContext('2d');
+
+let W, H;
+function resize() {
+  W = canvas.width = window.innerWidth;
+  H = canvas.height = window.innerHeight;
+}
+resize();
+window.addEventListener('resize', resize);
+
+// ── Camera state ──────────────────────────────────────────
+let rotX = -0.35, rotY = 0.3;
+let autoRotY = 0;
+let autoSpin = true;
+let zoom = 1;
+let dragging = false, lastMX, lastMY;
+
+canvas.addEventListener('mousedown', e => { dragging = true; autoSpin = false; lastMX = e.clientX; lastMY = e.clientY; });
+canvas.addEventListener('mousemove', e => {
+  if (!dragging) return;
+  rotY += (e.clientX - lastMX) * 0.008;
+  rotX += (e.clientY - lastMY) * 0.005;
+  rotX = Math.max(-1.2, Math.min(0.2, rotX));
+  lastMX = e.clientX; lastMY = e.clientY;
+});
+canvas.addEventListener('mouseup', () => { dragging = false; });
+canvas.addEventListener('mouseleave', () => { dragging = false; });
+canvas.addEventListener('wheel', e => { zoom *= e.deltaY > 0 ? 0.95 : 1.05; zoom = Math.max(0.4, Math.min(2.5, zoom)); });
+
+// Touch
+canvas.addEventListener('touchstart', e => { dragging = true; autoSpin = false; lastMX = e.touches[0].clientX; lastMY = e.touches[0].clientY; });
+canvas.addEventListener('touchmove', e => {
+  if (!dragging) return;
+  rotY += (e.touches[0].clientX - lastMX) * 0.008;
+  rotX += (e.touches[0].clientY - lastMY) * 0.005;
+  lastMX = e.touches[0].clientX; lastMY = e.touches[0].clientY;
+});
+canvas.addEventListener('touchend', () => { dragging = false; });
+
+// ── Cluster definitions ───────────────────────────────────
+const clusters = [
+  { name: 'Tradies',            color: '#4ade80', cx: -0.6, cy: -0.5, cz:  0.7, n: 180, spread: [0.25, 0.20, 0.20] },
+  { name: 'Young Professionals',color: '#60a5fa', cx:  0.5, cy:  0.6, cz:  0.1, n: 140, spread: [0.22, 0.22, 0.25] },
+  { name: 'Budget Families',    color: '#f59e0b', cx:  0.0, cy: -0.3, cz: -0.5, n: 200, spread: [0.28, 0.18, 0.22] },
+  { name: 'Occasional Shoppers',color: '#e879f9', cx: -0.4, cy:  0.3, cz: -0.6, n: 120, spread: [0.30, 0.28, 0.30] },
+  { name: 'High-Value Loyalists',color:'#f87171', cx:  0.7, cy:  0.7, cz:  0.5, n: 80,  spread: [0.18, 0.18, 0.18] },
+];
+
+// Generate points
+function randn() { return (Math.random() + Math.random() + Math.random() - 1.5) * 0.8; }
+const points = [];
+clusters.forEach((cl, ci) => {
+  for (let i = 0; i < cl.n; i++) {
+    points.push({
+      x: cl.cx + randn() * cl.spread[0],
+      y: cl.cy + randn() * cl.spread[1],
+      z: cl.cz + randn() * cl.spread[2],
+      cluster: ci,
+      color: cl.color,
+      r: 2.5 + Math.random() * 2,
+    });
+  }
+});
+
+// Centroid labels
+const centroids = clusters.map(cl => ({ x: cl.cx, y: cl.cy, z: cl.cz, name: cl.name, color: cl.color }));
+
+// ── 3D projection ─────────────────────────────────────────
+function project(x, y, z) {
+  // Rotate Y
+  const ry = rotY + autoRotY;
+  let x1 = x * Math.cos(ry) - z * Math.sin(ry);
+  let z1 = x * Math.sin(ry) + z * Math.cos(ry);
+  // Rotate X
+  let y1 = y * Math.cos(rotX) - z1 * Math.sin(rotX);
+  let z2 = y * Math.sin(rotX) + z1 * Math.cos(rotX);
+
+  const fov = 600 * zoom;
+  const depth = fov / (fov + z2 * 200 + 300);
+  return {
+    sx: W / 2 + x1 * 260 * depth,
+    sy: H / 2 + y1 * 200 * depth,
+    depth: z2,
+    scale: depth,
+  };
+}
+
+// Draw grid/axes
+function drawAxes() {
+  const axisLen = 1.1;
+  const axes = [
+    { from: [-axisLen,0,0], to: [axisLen,0,0], label: 'Recency', col: '#1e3527' },
+    { from: [0,-axisLen,0], to: [0,axisLen,0], label: 'Monetary', col: '#1e3527' },
+    { from: [0,0,-axisLen], to: [0,0,axisLen], label: 'Frequency', col: '#1e3527' },
+  ];
+
+  // Grid planes (faint)
+  const steps = 5;
+  ctx.strokeStyle = 'rgba(30,53,39,0.4)';
+  ctx.lineWidth = 0.5;
+  for (let i = -steps; i <= steps; i++) {
+    const t = i / steps;
+    // XZ plane
+    let p1 = project(t, -1, -1), p2 = project(t, -1, 1);
+    ctx.beginPath(); ctx.moveTo(p1.sx, p1.sy); ctx.lineTo(p2.sx, p2.sy); ctx.stroke();
+    p1 = project(-1, -1, t); p2 = project(1, -1, t);
+    ctx.beginPath(); ctx.moveTo(p1.sx, p1.sy); ctx.lineTo(p2.sx, p2.sy); ctx.stroke();
+  }
+
+  // Axes
+  axes.forEach(ax => {
+    const p1 = project(...ax.from);
+    const p2 = project(...ax.to);
+    ctx.strokeStyle = '#2a5040';
+    ctx.lineWidth = 1;
+    ctx.beginPath(); ctx.moveTo(p1.sx, p1.sy); ctx.lineTo(p2.sx, p2.sy); ctx.stroke();
+  });
+}
+
+// ── Main render ───────────────────────────────────────────
+let t = 0;
+function render() {
+  ctx.clearRect(0, 0, W, H);
+
+  // Subtle radial bg glow
+  const grd = ctx.createRadialGradient(W/2, H/2, 0, W/2, H/2, Math.max(W,H)*0.6);
+  grd.addColorStop(0, 'rgba(74,222,128,0.04)');
+  grd.addColorStop(1, 'rgba(10,15,13,0)');
+  ctx.fillStyle = grd;
+  ctx.fillRect(0, 0, W, H);
+
+  if (autoSpin) autoRotY += 0.004;
+  t++;
+
+  drawAxes();
+
+  // Project & sort by depth
+  const projected = points.map(p => ({
+    ...p,
+    proj: project(p.x, p.y, p.z),
+  })).sort((a, b) => a.proj.depth - b.proj.depth);
+
+  // Draw connections between nearby same-cluster points (faint)
+  ctx.lineWidth = 0.4;
+  for (let i = 0; i < projected.length; i++) {
+    for (let j = i+1; j < projected.length; j++) {
+      if (projected[i].cluster !== projected[j].cluster) continue;
+      const dx = projected[i].x - projected[j].x;
+      const dy = projected[i].y - projected[j].y;
+      const dz = projected[i].z - projected[j].z;
+      if (dx*dx + dy*dy + dz*dz > 0.08) continue;
+      const col = clusters[projected[i].cluster].color;
+      ctx.strokeStyle = col + '18';
+      ctx.beginPath();
+      ctx.moveTo(projected[i].proj.sx, projected[i].proj.sy);
+      ctx.lineTo(projected[j].proj.sx, projected[j].proj.sy);
+      ctx.stroke();
+    }
+  }
+
+  // Draw points
+  projected.forEach(p => {
+    const { sx, sy, scale } = p.proj;
+    const r = p.r * scale * 1.5;
+    const pulse = 0.85 + 0.15 * Math.sin(t * 0.03 + p.x * 5 + p.z * 3);
+
+    // Glow
+    const glow = ctx.createRadialGradient(sx, sy, 0, sx, sy, r * 3);
+    glow.addColorStop(0, p.color + '55');
+    glow.addColorStop(1, 'transparent');
+    ctx.fillStyle = glow;
+    ctx.beginPath();
+    ctx.arc(sx, sy, r * 3, 0, Math.PI * 2);
+    ctx.fill();
+
+    // Core
+    ctx.fillStyle = p.color;
+    ctx.globalAlpha = 0.75 * pulse;
+    ctx.beginPath();
+    ctx.arc(sx, sy, r, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.globalAlpha = 1;
+  });
+
+  // Draw centroid labels
+  centroids.forEach(c => {
+    const p = project(c.x, c.y, c.z);
+
+    // Ring
+    ctx.strokeStyle = c.color + 'aa';
+    ctx.lineWidth = 1.5;
+    ctx.beginPath();
+    ctx.arc(p.sx, p.sy, 14 * p.scale, 0, Math.PI * 2);
+    ctx.stroke();
+
+    // Cross
+    const cr = 5 * p.scale;
+    ctx.strokeStyle = c.color;
+    ctx.lineWidth = 1;
+    ctx.beginPath();
+    ctx.moveTo(p.sx - cr, p.sy); ctx.lineTo(p.sx + cr, p.sy);
+    ctx.moveTo(p.sx, p.sy - cr); ctx.lineTo(p.sx, p.sy + cr);
+    ctx.stroke();
+  });
+
+  requestAnimationFrame(render);
+}
+
+render();
+</script>
+</body>
+</html>
