@@ -680,7 +680,7 @@
             <span class="project-tag">Python</span>
           </div>
         </div>
-        <a href="#" class="project-link">View Project ↗</a>
+        <a href="projects/plant-disease.html" class="project-link">View Project ↗</a>
       </div>
 
       <!-- Project 2 -->
@@ -699,7 +699,7 @@
             <span class="project-tag">IEEE Published</span>
           </div>
         </div>
-        <a href="https://ieeexplore.ieee.org/document/9646221" class="project-link" target="_blank">IEEE Paper ↗</a>
+        <a href="projects/hydroponic.html" class="project-link">View Project ↗</a>
       </div>
 
       <!-- Project 3 -->
@@ -718,8 +718,7 @@
             <span class="project-tag">Unsupervised ML</span>
           </div>
         </div>
-        <a href="#" class="project-link">View Project ↗</a>
-      </div>
+        <a href="projects/satellite.html" class="project-link">View Project ↗</a>
 
     </div>
   </section>
@@ -734,7 +733,7 @@
     <div class="contact-links reveal">
       <div class="contact-item">
         <span>Email</span>
-        <a href="/cdn-cgi/l/email-protection#73191c0016155d02061a011c141233141e121a1f5d101c1e"><span class="__cf_email__" data-cfemail="fe94918d9b98d08f8b978c91999fbe99939f9792d09d9193">[email&#160;protected]</span></a>
+        <a href="mailto:josef.quiroga@gmail.com">josef.quiroga@gmail.com</a>
       </div>
       <div class="contact-item">
         <span>LinkedIn</span>
@@ -746,11 +745,11 @@
       </div>
       <div class="contact-item">
         <span>Location</span>
-        <a href="#">Sydney, NSW, Australia</a>
+        <span style="color:var(--muted)">Sydney, NSW, Australia</span>
       </div>
     </div>
     <div class="reveal">
-      <a href="/cdn-cgi/l/email-protection#4923263a2c2f67383c203b262e28092e24282025672a2624" class="btn btn-primary">Send me an email</a>
+      <a href="mailto:josef.quiroga@gmail.com" class="btn btn-primary">Send me an email</a>
     </div>
   </section>
 
@@ -768,7 +767,13 @@
     </div>
   </footer>
 
-  <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
-    // Scroll reveal
+  <script>
     const reveals = document.querySelectorAll('.reveal');
-    const observer = new Intersection
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((e, i) => { if (e.isIntersecting) { setTimeout(() => e.target.classList.add('visible'), i * 80); observer.unobserve(e.target); } });
+    }, { threshold: 0.1 });
+    reveals.forEach(el => observer.observe(el));
+  </script>
+
+</body>
+</html>
