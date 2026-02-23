@@ -145,7 +145,7 @@
       <!-- Project 1 -->
       <div class="project-card featured reveal">
         <div>
-          <span class="featured-badge">Latest</span>
+          <span class="featured-badge" style="background:#2a5040; color:#7a9e87;">Personal</span>
           <p class="project-num">01</p>
           <h3 class="project-title">Plant Disease Classification using Neural Networks</h3>
           <p class="project-desc">
@@ -204,9 +204,10 @@
       </div>
 
       <!-- Project 4 -->
-      <div class="project-card reveal" style="background: linear-gradient(135deg, #162019 0%, #0f1f14 100%); border-color: rgba(74,222,128,0.2);">
+      <div class="project-card featured reveal" style="border-color: rgba(74,222,128,0.3);">
         <div>
-          <span class="featured-badge" style="background: linear-gradient(90deg, #4ade80, #60a5fa); color: #0a0f0d;">MSc Thesis</span>
+          <span class="featured-badge">Latest</span>
+          <span class="featured-badge" style="background: #1e3527; color: #7a9e87; margin-left:0.4rem;">MSc Thesis</span>
           <p class="project-num">04</p>
           <h3 class="project-title">RFM Customer Segmentation & Behavioural Cohort Discovery</h3>
           <p class="project-desc">
@@ -248,9 +249,36 @@
     </div>
   </footer>
 
+  
   <script>
+    // Show all reveal elements immediately if already in viewport, 
+    // otherwise observe. Use a low threshold so cards never stay hidden.
     const reveals = document.querySelectorAll('.reveal');
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach((e, i) => { if (e.isIntersecting) { setTimeout(() => e.target.classList.add('visible'), i * 150); } });
-    }, { threshold: 0.1 });
-    reveals.forEach(r => observer.observe(r));
+    
+    function showEl(el, delay) {
+      setTimeout(() => el.classList.add('visible'), delay);
+    }
+
+    if ('IntersectionObserver' in window) {
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry, i) => {
+          if (entry.isIntersecting) {
+            showEl(entry.target, i * 80);
+            observer.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.05, rootMargin: '0px 0px -20px 0px' });
+      reveals.forEach(el => observer.observe(el));
+    } else {
+      // Fallback: show everything immediately
+      reveals.forEach(el => el.classList.add('visible'));
+    }
+
+    // Safety net: force show anything still hidden after 1.5s
+    setTimeout(() => {
+      reveals.forEach(el => el.classList.add('visible'));
+    }, 1500);
+  </script>
+
+</body>
+</html>
