@@ -28,7 +28,7 @@ python3 -m http.server 8000
 ## Adding a project
 
 1. Copy an existing page in `projects/` (e.g. `satellite.html`) and edit the content.
-2. Add a card for it to `projects.html` (and `index.html` if it should be featured).
+2. Add a card for it to `projects.html` (and `index.html` if it should be featured). Set `data-roles` on the card to any of `ds de da rs` (Data Science, Data Engineering, Analytics, Research) so the filter buttons pick it up, and add the matching `role-tag` labels.
 3. Update the prev/next links at the bottom of the neighbouring project pages.
 4. Add the URL to `sitemap.xml`.
 5. Convert images to WebP before adding them: `cwebp -q 80 -resize 1600 0 in.png -o images/out.webp`.

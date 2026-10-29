@@ -4,13 +4,13 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Projects — Jose Quiroga</title>
-  <meta name="description" content="Data science and ML projects by Jose Quiroga — CNN image classification, IoT systems, satellite segmentation, and RFM customer segmentation." />
+  <meta name="description" content="Data science, data engineering and analytics projects by Jose Quiroga — RFM customer segmentation, CNN image classification, satellite segmentation and IoT systems." />
   <link rel="canonical" href="https://josefquiroga.github.io/projects.html" />
   <meta name="theme-color" content="#0a0f0d" />
   <link rel="icon" href="favicon.svg" type="image/svg+xml" />
   <meta property="og:type" content="website" />
   <meta property="og:title" content="Projects — Jose Quiroga" />
-  <meta property="og:description" content="Data science and ML projects by Jose Quiroga — CNN image classification, IoT systems, satellite segmentation, and RFM customer segmentation." />
+  <meta property="og:description" content="Data science, data engineering and analytics projects by Jose Quiroga — RFM customer segmentation, CNN image classification, satellite segmentation and IoT systems." />
   <meta property="og:url" content="https://josefquiroga.github.io/projects.html" />
   <meta property="og:image" content="https://josefquiroga.github.io/images/og.png" />
   <meta name="twitter:card" content="summary_large_image" />
@@ -22,90 +22,62 @@
 
     /* HERO */
     .page-hero { padding: 10rem 3rem 5rem; border-bottom: 1px solid var(--border); position: relative; overflow: hidden; }
-    .hero-glow { position: absolute; width: 500px; height: 500px; border-radius: 50%; background: radial-gradient(circle, rgba(74,222,128,0.1) 0%, transparent 70%); top: -10%; right: 0; pointer-events: none; }
+    .page-hero > * { max-width: 1100px; margin-left: auto; margin-right: auto; position: relative; }
     .page-tag { font-family: var(--mono); font-size: 0.75rem; color: var(--accent); letter-spacing: 0.15em; text-transform: uppercase; margin-bottom: 1rem; opacity:0; animation: fadeUp 0.7s 0.2s forwards; }
-    .page-title { font-family: var(--serif); font-size: clamp(2.8rem,6vw,5rem); line-height: 1.1; color: var(--text); opacity:0; animation: fadeUp 0.7s 0.4s forwards; }
-    .page-title em { font-style: italic; color: var(--accent); }
-    .page-sub { margin-top: 1.2rem; color: var(--muted); max-width: 560px; line-height: 1.8; opacity:0; animation: fadeUp 0.7s 0.6s forwards; }
+    .page-title { font-family: var(--serif); font-weight: 400; font-size: clamp(2.8rem,6vw,4.6rem); line-height: 1.08; color: var(--text); opacity:0; animation: fadeUp 0.7s 0.4s forwards; }
+    .page-title em { color: var(--accent); }
+    .page-sub { margin-top: 1.2rem; color: var(--muted); line-height: 1.8; font-size: 1.05rem; opacity:0; animation: fadeUp 0.7s 0.6s forwards; }
+    .page-sub span { display: block; max-width: 600px; }
 
     /* MAIN */
-    main { max-width: 1100px; margin: 0 auto; padding: 5rem 3rem; }
+    main { max-width: 1100px; margin: 0 auto; padding: 4rem 3rem 5rem; }
 
-    .section-label { font-family: var(--mono); font-size: 0.73rem; color: var(--accent); letter-spacing: 0.15em; text-transform: uppercase; margin-bottom: 0.8rem; }
-    .section-title { font-family: var(--serif); font-size: clamp(1.6rem,3vw,2.2rem); color: var(--text); margin-bottom: 2.5rem; }
+    /* FILTERS */
+    .filters { display: flex; flex-wrap: wrap; gap: 0.6rem; margin-bottom: 2rem; }
+    .filters[hidden] { display: none; }
+    .filter { min-height: 44px; padding: 0 1.1rem; border-radius: 999px; border: 1px solid #2b4a37; background: transparent; color: var(--text); font-family: var(--mono); font-size: 0.8rem; letter-spacing: 0.04em; cursor: pointer; transition: background 0.2s, border-color 0.2s, color 0.2s; }
+    .filter:hover { border-color: var(--accent); }
+    .filter[aria-pressed="true"] { background: var(--accent); border-color: var(--accent); color: var(--bg); }
+    .filter .count { opacity: 0.7; margin-left: 0.3rem; }
 
     /* PROJECT CARDS */
-    .projects-list { display: flex; flex-direction: column; gap: 1.5rem; }
-
-    .project-card {
-      background: var(--card); border: 1px solid var(--border); border-radius: 4px;
-      padding: 2.5rem; display: grid; grid-template-columns: 1fr auto;
-      gap: 2rem; align-items: start;
-      transition: border-color 0.25s, transform 0.25s;
-      position: relative; overflow: hidden;
-    }
-    .project-card::before {
-      content: ''; position: absolute; top: 0; left: 0;
-      width: 3px; height: 100%; background: var(--accent);
-      transform: scaleY(0); transform-origin: bottom; transition: transform 0.3s;
-    }
-    .project-card:hover { border-color: rgba(74,222,128,0.3); transform: translateX(4px); }
-    .project-card:hover::before { transform: scaleY(1); }
-
-    .project-card.featured {
-      background: linear-gradient(135deg, #162019 0%, #0f1f14 100%);
-      border-color: rgba(74,222,128,0.25);
-    }
-
-    .featured-badge {
-      font-family: var(--mono); font-size: 0.65rem; color: var(--bg);
-      background: var(--accent); padding: 0.2rem 0.6rem; border-radius: 2px;
-      letter-spacing: 0.1em; text-transform: uppercase; display: inline-block; margin-bottom: 0.6rem;
-    }
-
-    .project-num { font-family: var(--mono); font-size: 0.7rem; color: var(--accent); letter-spacing: 0.1em; margin-bottom: 0.8rem; }
-    .project-title { font-family: var(--serif); font-size: 1.5rem; color: var(--text); margin-bottom: 0.8rem; line-height: 1.2; }
-    .project-desc { color: var(--muted); line-height: 1.75; font-size: 0.95rem; margin-bottom: 1.2rem; }
-    .project-desc strong { color: var(--text); font-weight: 500; }
-
-    .project-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; }
-    .project-tag { font-family: var(--mono); font-size: 0.68rem; padding: 0.25rem 0.6rem; background: rgba(74,222,128,0.07); border: 1px solid rgba(74,222,128,0.2); border-radius: 2px; color: var(--accent2); letter-spacing: 0.05em; }
-
-    .project-link {
-      display: flex; align-items: center; gap: 0.4rem;
-      font-family: var(--mono); font-size: 0.78rem; color: var(--accent);
-      text-decoration: none; white-space: nowrap; padding: 0.6rem 1.2rem;
-      border: 1px solid rgba(74,222,128,0.3); border-radius: 2px;
-      transition: all 0.2s; align-self: start;
-    }
-    .project-link:hover { background: rgba(74,222,128,0.1); }
+    .projects-list { display: flex; flex-direction: column; gap: 1.25rem; }
+    .project-card { display: flex; flex-wrap: wrap; background: var(--surface); border: 1px solid var(--border); border-radius: 4px; overflow: hidden; color: var(--text); text-decoration: none; transition: border-color 0.25s; }
+    .project-card[hidden] { display: none; }
+    .project-card:hover { border-color: rgba(74,222,128,0.35); }
+    .project-thumb { flex: 1 1 260px; min-height: 200px; max-height: 320px; background: #0d1410; display: flex; align-items: center; justify-content: center; overflow: hidden; }
+    .project-thumb img { width: 100%; height: 100%; object-fit: cover; }
+    .project-body { flex: 999 1 520px; min-width: 0; padding: 1.75rem; display: flex; flex-direction: column; gap: 1rem; }
+    .project-meta { display: flex; flex-wrap: wrap; align-items: center; gap: 0.5rem 0.75rem; }
+    .project-context { font-family: var(--mono); font-size: 0.72rem; color: var(--muted); letter-spacing: 0.04em; }
+    .project-title { font-family: var(--serif); font-weight: 400; font-size: 1.65rem; line-height: 1.2; }
+    .par { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1rem 1.5rem; font-size: 0.93rem; line-height: 1.55; }
+    .par dt { font-family: var(--mono); font-size: 0.68rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); margin-bottom: 0.3rem; }
+    .par dd { color: var(--text); }
+    .par .result dd { color: var(--accent); font-weight: 400; }
+    .project-foot { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 0.75rem; padding-top: 0.9rem; border-top: 1px solid var(--border); font-family: var(--mono); font-size: 0.78rem; }
+    .project-foot span:first-child { color: var(--muted); }
+    .project-foot span:last-child { color: var(--accent); }
 
     /* MORE COMING */
     .coming-card {
       background: var(--surface); border: 1px dashed var(--border);
-      border-radius: 4px; padding: 3rem; text-align: center; margin-top: 1rem;
+      border-radius: 4px; padding: 3rem; text-align: center; margin-top: 1.25rem;
     }
     .coming-card p { font-family: var(--mono); font-size: 0.8rem; color: var(--muted); line-height: 1.8; }
     .coming-card strong { color: var(--accent); }
 
-    @keyframes fadeUp { from { opacity:0; transform: translateY(18px); } to { opacity:1; transform: none; } }
-
     @media (max-width: 768px) {
       .page-hero { padding: 8rem 1.5rem 3rem; }
-      main { padding: 3rem 1.5rem; }
-      .project-card { grid-template-columns: 1fr; padding: 1.5rem; gap: 1.2rem; }
-      .project-link { justify-content: center; }
+      main { padding: 2.5rem 1.5rem 3rem; }
+      .par { grid-template-columns: 1fr; }
+      .project-body { padding: 1.4rem; }
       .coming-card { padding: 2rem 1.5rem; }
-    }
-    @media (hover: none) {
-      .project-card:hover { transform: none; }
     }
   </style>
 </head>
 <body>
-
   <a href="#main" class="skip-link">Skip to content</a>
-
   <nav>
     <a href="index.html" class="nav-logo">jose.quiroga</a>
     <button class="nav-toggle" aria-label="Menu" aria-expanded="false" aria-controls="nav-links"><span></span><span></span><span></span></button>
@@ -119,114 +91,101 @@
       <li><a href="https://github.com/josefquiroga" target="_blank" rel="noopener">GitHub ↗</a></li>
     </ul>
   </nav>
-
   <div class="page-hero" id="main">
     <div class="hero-grid"></div>
-    <div class="hero-glow"></div>
-    <p class="page-tag">Selected work</p>
-    <h1 class="page-title">Projects &<br /><em>Case Studies</em></h1>
-    <p class="page-sub">A collection of machine learning, computer vision, and data engineering projects — from research prototypes to production systems.</p>
+    <p class="page-tag">Work</p>
+    <h1 class="page-title">Projects &amp; <em>case studies</em></h1>
+    <p class="page-sub"><span>Filter by the kind of role you're hiring for. Each project states the problem, what I built and the result.</span></p>
   </div>
-
   <main>
-    <p class="section-label reveal">All projects</p>
-    <h2 class="section-title reveal">Work</h2>
+    <div class="filters" role="group" aria-label="Filter projects by discipline" hidden>
+      <button type="button" class="filter" data-filter="all" aria-pressed="true">All<span class="count"></span></button>
+      <button type="button" class="filter" data-filter="ds" aria-pressed="false">Data Science<span class="count"></span></button>
+      <button type="button" class="filter" data-filter="de" aria-pressed="false">Data Engineering<span class="count"></span></button>
+      <button type="button" class="filter" data-filter="da" aria-pressed="false">Analytics<span class="count"></span></button>
+      <button type="button" class="filter" data-filter="rs" aria-pressed="false">Research<span class="count"></span></button>
+    </div>
 
     <div class="projects-list">
-
-      <!-- Project 1 -->
-      <div class="project-card featured reveal">
-        <div>
-          <span class="featured-badge" style="background:#2a5040; color:#7a9e87;">Personal</span>
-          <p class="project-num">01</p>
-          <h3 class="project-title">Plant Disease Classification using Neural Networks</h3>
-          <p class="project-desc">
-            Developed a convolutional neural network to classify plant leaf diseases across multiple species. The model was trained on a dataset of over <strong>20,000 images</strong> and achieved <strong>89% classification accuracy</strong> — enabling faster, automated detection of crop diseases that would otherwise require expert manual inspection. The project covers the full ML pipeline: data preprocessing and augmentation, model architecture design, training, evaluation, and performance analysis.
-          </p>
-          <div class="project-tags">
-            <span class="project-tag">Computer Vision</span>
-            <span class="project-tag">CNN</span>
-            <span class="project-tag">TensorFlow</span>
-            <span class="project-tag">Image Classification</span>
-            <span class="project-tag">Python</span>
-            <span class="project-tag">Data Augmentation</span>
-          </div>
+      <!-- RFM segmentation -->
+      <a href="projects/rfm-segmentation.html" class="project-card reveal" data-roles="ds da de">
+        <div class="project-thumb">
+          <svg width="260" height="150" viewBox="0 0 260 150" aria-hidden="true"><g fill="#4ade80"><circle cx="40" cy="110" r="4"/><circle cx="52" cy="98" r="4"/><circle cx="34" cy="96" r="4"/><circle cx="58" cy="116" r="4"/></g><g fill="#60a5fa"><circle cx="110" cy="50" r="4"/><circle cx="124" cy="40" r="4"/><circle cx="118" cy="62" r="4"/><circle cx="102" cy="38" r="4"/></g><g fill="#fbbf24"><circle cx="190" cy="100" r="4"/><circle cx="204" cy="88" r="4"/><circle cx="182" cy="86" r="4"/><circle cx="212" cy="108" r="4"/></g><g fill="#f472b6"><circle cx="210" cy="30" r="4"/><circle cx="222" cy="44" r="4"/></g><g fill="#7a9e87"><circle cx="140" cy="128" r="4"/><circle cx="152" cy="118" r="4"/></g></svg>
         </div>
-        <a href="projects/plant-disease.html" class="project-link">View Project ↗</a>
-      </div>
-
-      <!-- Project 2 -->
-      <div class="project-card reveal">
-        <div>
-          <p class="project-num">02</p>
-          <h3 class="project-title">Autonomic Hydroponic System with Real-Time Monitoring</h3>
-          <p class="project-desc">
-            Designed and implemented a self-managing hydroponic system prototype using IoT-connected embedded devices. The system integrates Autonomic Computing techniques to handle self-monitoring, self-regulation, self-healing, and auto-optimisation of resources — with all sensor data streamed and visualised in real time. Published and presented at the <strong>9th International Conference on Control, Mechatronics and Automation (ICCMA 2021)</strong>.
-          </p>
-          <div class="project-tags">
-            <span class="project-tag">IoT</span>
-            <span class="project-tag">Embedded Systems</span>
-            <span class="project-tag">Real-Time Monitoring</span>
-            <span class="project-tag">Autonomic Computing</span>
-            <span class="project-tag">Smart Agriculture</span>
-            <span class="project-tag">IEEE Published</span>
+        <div class="project-body">
+          <div class="project-meta">
+            <div class="role-tags"><span class="role-tag role-ds">Data Science</span><span class="role-tag role-da">Analytics</span><span class="role-tag role-de">Data Engineering</span></div>
+            <span class="project-context">DataMesh Group · MSc thesis · Latest</span>
           </div>
+          <h2 class="project-title">RFM customer segmentation &amp; behavioural cohort discovery</h2>
+          <dl class="par">
+            <div><dt>Problem</dt><dd>Flat RFM scores hid how customers actually behave across merchants.</dd></div>
+            <div><dt>Approach</dt><dd>Z-scored RFM vectors per segment, K-Means (elbow + silhouette), PostgreSQL, Node.js API and React dashboard.</dd></div>
+            <div class="result"><dt>Result</dt><dd>5 interpretable cohorts across 2,107 segments</dd></div>
+          </dl>
+          <p class="project-foot"><span>Python · AWS · PostgreSQL · Node.js · React</span><span>Read case study →</span></p>
         </div>
-        <a href="projects/hydroponic.html" class="project-link">View Project ↗</a>
-      </div>
+      </a>
 
-      <!-- Project 3 -->
-      <div class="project-card reveal">
-        <div>
-          <p class="project-num">03</p>
-          <h3 class="project-title">Land Cover Classification via Satellite Image Segmentation</h3>
-          <p class="project-desc">
-            Applied unsupervised machine learning to identify areas of forage loss from satellite imagery. Using the <strong>K-Means clustering algorithm</strong>, distinct colour clusters were extracted from the images and used to create masks that differentiate biomass-rich areas from barren land — providing a scalable, low-cost method for environmental and agricultural monitoring across large geographic areas.
-          </p>
-          <div class="project-tags">
-            <span class="project-tag">Image Segmentation</span>
-            <span class="project-tag">K-Means Clustering</span>
-            <span class="project-tag">Remote Sensing</span>
-            <span class="project-tag">Unsupervised ML</span>
-            <span class="project-tag">Python</span>
-            <span class="project-tag">Environmental AI</span>
+      <!-- Plant disease -->
+      <a href="projects/plant-disease.html" class="project-card reveal" data-roles="ds">
+        <div class="project-thumb"><img src="images/pic01.webp" alt="" width="1600" height="1469" loading="lazy" decoding="async" /></div>
+        <div class="project-body">
+          <div class="project-meta">
+            <div class="role-tags"><span class="role-tag role-ds">Data Science</span></div>
+            <span class="project-context">Personal · computer vision</span>
           </div>
+          <h2 class="project-title">Plant disease classification with a CNN</h2>
+          <dl class="par">
+            <div><dt>Problem</dt><dd>Diagnosing leaf disease needs slow, expert manual inspection.</dd></div>
+            <div><dt>Approach</dt><dd>Preprocessing and augmentation, CNN architecture design, training and evaluation in TensorFlow.</dd></div>
+            <div class="result"><dt>Result</dt><dd>89% accuracy on 20,000+ images</dd></div>
+          </dl>
+          <p class="project-foot"><span>Python · TensorFlow · computer vision</span><span>Read case study →</span></p>
         </div>
-        <a href="projects/satellite.html" class="project-link">View Project ↗</a>
-      </div>
+      </a>
 
-      <!-- Project 4 -->
-      <div class="project-card featured reveal" style="border-color: rgba(74,222,128,0.3);">
-        <div>
-          <span class="featured-badge">Latest</span>
-          <span class="featured-badge" style="background: #1e3527; color: #7a9e87; margin-left:0.4rem;">MSc Thesis</span>
-          <p class="project-num">04</p>
-          <h3 class="project-title">RFM Customer Segmentation & Behavioural Cohort Discovery</h3>
-          <p class="project-desc">
-            End-to-end ML pipeline built on real Australian payment transaction data at DataMesh Group. Applied <strong>K-Means clustering to normalised RFM vectors</strong> to automatically discover five interpretable customer cohorts — including "Tradies" (early morning energy drink & meat pie buyers), "Young Professionals" (petrol + restaurants), and "Budget Families" (fast food regulars). Full stack: AWS → Python pipeline → PostgreSQL → Node.js API → React dashboard. Features an <strong>interactive spinning 3D cluster visualisation</strong>.
-          </p>
-          <div class="project-tags">
-            <span class="project-tag">K-Means Clustering</span>
-            <span class="project-tag">RFM Analysis</span>
-            <span class="project-tag">Customer Segmentation</span>
-            <span class="project-tag">Python</span>
-            <span class="project-tag">PostgreSQL</span>
-            <span class="project-tag">Node.js API</span>
-            <span class="project-tag">React</span>
-            <span class="project-tag">Fintech</span>
+      <!-- Satellite -->
+      <a href="projects/satellite.html" class="project-card reveal" data-roles="ds da">
+        <div class="project-thumb"><img src="images/pic07.webp" alt="" width="396" height="720" loading="lazy" decoding="async" /></div>
+        <div class="project-body">
+          <div class="project-meta">
+            <div class="role-tags"><span class="role-tag role-ds">Data Science</span><span class="role-tag role-da">Analytics</span></div>
+            <span class="project-context">Remote sensing</span>
           </div>
+          <h2 class="project-title">Land-cover classification via satellite image segmentation</h2>
+          <dl class="par">
+            <div><dt>Problem</dt><dd>Tracking forage loss across large areas is costly to do by hand.</dd></div>
+            <div><dt>Approach</dt><dd>K-Means colour clustering to build masks separating biomass-rich areas from barren land.</dd></div>
+            <div class="result"><dt>Result</dt><dd>A scalable, low-cost monitoring method</dd></div>
+          </dl>
+          <p class="project-foot"><span>Python · unsupervised ML · image segmentation</span><span>Read case study →</span></p>
         </div>
-        <a href="projects/rfm-segmentation.html" class="project-link" style="border-color: rgba(74,222,128,0.4); color: var(--accent);">View Project ↗</a>
-      </div>
+      </a>
 
+      <!-- Hydroponic -->
+      <a href="projects/hydroponic.html" class="project-card reveal" data-roles="rs">
+        <div class="project-thumb"><img src="images/pic02.webp" alt="" width="656" height="987" loading="lazy" decoding="async" /></div>
+        <div class="project-body">
+          <div class="project-meta">
+            <div class="role-tags"><span class="role-tag role-rs">Research</span></div>
+            <span class="project-context">IEEE ICCMA 2021</span>
+          </div>
+          <h2 class="project-title">Autonomic hydroponic system with real-time monitoring</h2>
+          <dl class="par">
+            <div><dt>Problem</dt><dd>Small growers can't monitor nutrient systems around the clock.</dd></div>
+            <div><dt>Approach</dt><dd>IoT-connected embedded devices with self-monitoring, self-healing control loops and live sensor streaming.</dd></div>
+            <div class="result"><dt>Result</dt><dd>Published at IEEE ICCMA 2021</dd></div>
+          </dl>
+          <p class="project-foot"><span>IoT · embedded systems · real-time data</span><span>Read case study →</span></p>
+        </div>
+      </a>
     </div>
 
     <div class="coming-card reveal">
       <p><strong>More projects coming soon.</strong><br />Currently working on Gen AI and LLM projects. Check back or follow on <a href="https://github.com/josefquiroga" target="_blank" rel="noopener" style="color:var(--accent); text-decoration:none;">GitHub ↗</a> for updates.</p>
     </div>
-
   </main>
-
   <footer>
     <p>© 2026 Jose Quiroga</p>
     <div class="footer-links">
@@ -240,9 +199,6 @@
       <a href="mailto:josef.quiroga@gmail.com">Email</a>
     </div>
   </footer>
-
-  
   <script src="js/site.js" defer></script>
-
 </body>
 </html>

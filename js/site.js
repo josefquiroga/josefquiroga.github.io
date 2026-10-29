@@ -18,6 +18,28 @@
     });
   }
 
+  // ─── Project filters (projects.html) ───
+  const filters = document.querySelector('.filters');
+  if (filters) {
+    const cards = [...document.querySelectorAll('.project-card[data-roles]')];
+    const buttons = [...filters.querySelectorAll('.filter')];
+    const matches = (card, role) => role === 'all' || card.dataset.roles.split(' ').includes(role);
+    buttons.forEach((btn) => {
+      const role = btn.dataset.filter;
+      const count = cards.filter((card) => matches(card, role)).length;
+      btn.querySelector('.count').textContent = count;
+      if (!count) btn.hidden = true;
+      btn.addEventListener('click', () => {
+        buttons.forEach((b) => b.setAttribute('aria-pressed', String(b === btn)));
+        cards.forEach((card) => {
+          card.hidden = !matches(card, role);
+          if (!card.hidden) card.classList.add('visible');
+        });
+      });
+    });
+    filters.hidden = false;
+  }
+
   // ─── Scroll reveal ───
   const reveals = document.querySelectorAll('.reveal');
   const show = (el) => el.classList.add('visible');

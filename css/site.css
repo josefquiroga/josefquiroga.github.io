@@ -35,6 +35,14 @@ nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; j
 
 .hero-grid { position: absolute; inset: 0; background-image: linear-gradient(rgba(74,222,128,0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(74,222,128,0.04) 1px, transparent 1px); background-size: 60px 60px; mask-image: radial-gradient(ellipse 70% 80% at 15% 50%, black, transparent); pointer-events: none; }
 
+/* ─── ROLE TAGS (homepage + projects) ─── */
+.role-tags { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+.role-tag { font-family: var(--mono); font-size: 0.68rem; letter-spacing: 0.08em; text-transform: uppercase; padding: 0.25rem 0.55rem; border-radius: 2px; }
+.role-ds { background: #1b3a26; color: #86efac; }
+.role-de { background: #3a2a14; color: #fcd34d; }
+.role-da { background: #1b2b3a; color: #93c5fd; }
+.role-rs { background: #2e1f3a; color: #d8b4fe; }
+
 /* ─── FOOTER ─── */
 footer { border-top: 1px solid var(--border); padding: 2rem 3rem; display: flex; justify-content: space-between; align-items: center; gap: 1rem; }
 footer p { font-family: var(--mono); font-size: 0.72rem; color: var(--muted); }
