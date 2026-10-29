@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Page not found — Jose Quiroga</title>
+  <meta name="robots" content="noindex" />
+  <meta name="theme-color" content="#0a0f0d" />
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@300;400;500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+  <!-- Absolute paths: GitHub Pages serves this page for missing URLs at any depth -->
+  <link rel="stylesheet" href="/css/site.css" />
+  <style>
+    .page-hero { min-height: 100vh; min-height: 100svh; display: flex; flex-direction: column; justify-content: center; padding: 8rem 3rem 4rem; position: relative; overflow: hidden; }
+    .page-tag { font-family: var(--mono); font-size: 0.75rem; color: var(--accent); letter-spacing: 0.15em; text-transform: uppercase; margin-bottom: 1rem; opacity:0; animation: fadeUp 0.7s 0.2s forwards; }
+    .page-title { font-family: var(--serif); font-size: clamp(2.6rem,6vw,5rem); line-height: 1.1; color: var(--text); opacity:0; animation: fadeUp 0.7s 0.4s forwards; }
+    .page-title em { font-style: italic; color: var(--accent); }
+    .page-sub { margin-top: 1.2rem; color: var(--muted); max-width: 520px; line-height: 1.8; opacity:0; animation: fadeUp 0.7s 0.6s forwards; }
+    .ctas { display: flex; gap: 1rem; flex-wrap: wrap; margin-top: 2.5rem; opacity:0; animation: fadeUp 0.7s 0.8s forwards; }
+    .btn { display: inline-block; padding: 0.8rem 2rem; font-family: var(--mono); font-size: 0.82rem; letter-spacing: 0.05em; text-decoration: none; border-radius: 2px; transition: all 0.2s; }
+    .btn-primary { background: var(--accent); color: var(--bg); font-weight: 500; }
+    .btn-primary:hover { background: var(--accent2); }
+    .btn-outline { border: 1px solid var(--border); color: var(--muted); }
+    .btn-outline:hover { border-color: var(--accent); color: var(--accent); }
+    @media (max-width: 768px) { .page-hero { padding: 7rem 1.5rem 3rem; } }
+  </style>
+</head>
+<body>
+
+  <a href="#main" class="skip-link">Skip to content</a>
+
+  <nav>
+    <a href="/" class="nav-logo">jose.quiroga</a>
+    <button class="nav-toggle" aria-label="Menu" aria-expanded="false" aria-controls="nav-links"><span></span><span></span><span></span></button>
+    <ul class="nav-links" id="nav-links">
+      <li><a href="/projects.html">Projects</a></li>
+      <li><a href="/about.html">About</a></li>
+      <li><a href="/skills.html">Skills</a></li>
+      <li><a href="/publications.html">Publications</a></li>
+      <li><a href="/resume.html">Resume</a></li>
+      <li><a href="https://www.linkedin.com/in/josefquiroga/" target="_blank" rel="noopener">LinkedIn ↗</a></li>
+      <li><a href="https://github.com/josefquiroga" target="_blank" rel="noopener">GitHub ↗</a></li>
+    </ul>
+  </nav>
+
+  <div class="page-hero" id="main">
+    <div class="hero-grid"></div>
+    <p class="page-tag">Error 404</p>
+    <h1 class="page-title">This page is an<br /><em>outlier.</em></h1>
+    <p class="page-sub">The page you're looking for doesn't exist or has moved. Let's get you back to the data.</p>
+    <div class="ctas">
+      <a href="/" class="btn btn-primary">Back home</a>
+      <a href="/projects.html" class="btn btn-outline">View projects</a>
+    </div>
+  </div>
+
+  <script src="/js/site.js" defer></script>
+</body>
+</html>
