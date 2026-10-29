@@ -3,779 +3,332 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Jose Quiroga — Data Scientist</title>
-  <meta name="description" content="Portfolio of Jose Quiroga, a Data Scientist with a Mechatronics Engineering background, specialising in ML, cloud pipelines, and data-driven solutions." />
+  <title>Jose Quiroga — Data Scientist, Sydney</title>
+  <meta name="description" content="Jose Quiroga — Sydney-based data scientist working across data science, data engineering and analytics: ML models, GCP/AWS pipelines and dashboards in production." />
+  <link rel="canonical" href="https://josefquiroga.github.io/" />
+  <meta name="theme-color" content="#0a0f0d" />
+  <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Jose Quiroga — Data Scientist, Sydney" />
+  <meta property="og:description" content="Sydney-based data scientist working across data science, data engineering and analytics: ML models, GCP/AWS pipelines and dashboards in production." />
+  <meta property="og:url" content="https://josefquiroga.github.io/" />
+  <meta property="og:image" content="https://josefquiroga.github.io/images/og.png" />
+  <meta name="twitter:card" content="summary_large_image" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@300;400;500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/site.css" />
   <style>
-    :root {
-      --bg: #0a0f0d;
-      --surface: #111a15;
-      --card: #162019;
-      --accent: #4ade80;
-      --accent2: #86efac;
-      --text: #e8f5ee;
-      --muted: #7a9e87;
-      --border: #1e3527;
-      --serif: 'DM Serif Display', serif;
-      --mono: 'DM Mono', monospace;
-      --sans: 'DM Sans', sans-serif;
-    }
+    .wrap { max-width: 1200px; margin: 0 auto; padding-left: 3rem; padding-right: 3rem; }
 
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-    html { scroll-behavior: smooth; }
-
-    body {
-      background: var(--bg);
-      color: var(--text);
-      font-family: var(--sans);
-      font-weight: 300;
-      overflow-x: hidden;
-    }
-
-    /* ─── NAV ─── */
-    nav {
-      position: fixed;
-      top: 0; left: 0; right: 0;
-      z-index: 100;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 1.2rem 3rem;
-      background: rgba(10, 15, 13, 0.85);
-      backdrop-filter: blur(12px);
-      border-bottom: 1px solid var(--border);
-    }
-
-    .nav-logo {
-      font-family: var(--mono);
-      font-size: 0.85rem;
-      color: var(--accent);
-      letter-spacing: 0.05em;
-    }
-
-    .nav-links {
-      display: flex;
-      gap: 2.5rem;
-      list-style: none;
-    }
-
-    .nav-links a {
-      font-family: var(--mono);
-      font-size: 0.78rem;
-      color: var(--muted);
-      text-decoration: none;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      transition: color 0.2s;
-    }
-
-    .nav-links a:hover { color: var(--accent); }
+    /* ─── BUTTONS ─── */
+    .btn { display: inline-flex; align-items: center; justify-content: center; min-height: 48px; padding: 0.8rem 1.6rem; font-family: var(--mono); font-size: 0.8rem; letter-spacing: 0.06em; text-transform: uppercase; text-decoration: none; border-radius: 2px; transition: background 0.2s, border-color 0.2s, color 0.2s; }
+    .btn-primary { background: var(--accent); color: var(--bg); font-weight: 500; }
+    .btn-primary:hover { background: var(--accent2); }
+    .btn-outline { border: 1px solid #2b4a37; color: var(--text); }
+    .btn-outline:hover { border-color: var(--accent); color: var(--accent); }
 
     /* ─── HERO ─── */
-    #hero {
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      padding: 8rem 3rem 4rem;
-      position: relative;
-      overflow: hidden;
-    }
+    #hero { position: relative; overflow: hidden; padding-top: 10rem; padding-bottom: 5rem; display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr); gap: 4rem; align-items: end; }
+    .hero-copy { display: flex; flex-direction: column; gap: 1.75rem; position: relative; opacity: 0; animation: fadeUp 0.8s 0.2s forwards; }
+    .pills { display: flex; flex-wrap: wrap; gap: 0.6rem; }
+    .pill { display: inline-flex; align-items: center; gap: 0.5rem; border: 1px solid #2b4a37; border-radius: 999px; padding: 0.4rem 0.8rem; font-family: var(--mono); font-size: 0.75rem; letter-spacing: 0.04em; color: var(--text); }
+    .pill .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--accent); }
+    .hero-title { font-family: var(--serif); font-weight: 400; font-size: clamp(2.6rem, 5.4vw, 4.6rem); line-height: 1.04; }
+    .hero-title em { color: var(--accent); }
+    .hero-sub { max-width: 560px; font-size: 1.15rem; line-height: 1.65; color: var(--muted); }
+    .hero-sub strong { color: var(--text); font-weight: 400; }
+    .hero-ctas { display: flex; flex-wrap: wrap; gap: 0.75rem; }
 
-    .hero-grid {
-      position: absolute;
-      inset: 0;
-      background-image:
-        linear-gradient(rgba(74,222,128,0.04) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(74,222,128,0.04) 1px, transparent 1px);
-      background-size: 60px 60px;
-      mask-image: radial-gradient(ellipse 80% 60% at 50% 50%, black, transparent);
-    }
+    .impact { position: relative; background: var(--surface); border: 1px solid var(--border); border-radius: 4px; opacity: 0; animation: fadeUp 0.8s 0.45s forwards; }
+    .impact-head { padding: 1rem 1.5rem; border-bottom: 1px solid var(--border); font-family: var(--mono); font-size: 0.72rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); }
+    .impact-row { display: flex; align-items: baseline; gap: 1.25rem; padding: 1.3rem 1.5rem; border-bottom: 1px solid var(--border); }
+    .impact-row:last-child { border-bottom: 0; }
+    .impact-num { font-family: var(--serif); font-size: 2.6rem; color: var(--accent); min-width: 6.5rem; line-height: 1; }
+    .impact-text { display: flex; flex-direction: column; gap: 0.25rem; }
+    .impact-text strong { font-weight: 400; font-size: 1rem; }
+    .impact-text span { font-size: 0.88rem; color: var(--muted); line-height: 1.5; }
 
-    .hero-glow {
-      position: absolute;
-      width: 600px;
-      height: 600px;
-      border-radius: 50%;
-      background: radial-gradient(circle, rgba(74,222,128,0.12) 0%, transparent 70%);
-      top: 10%; right: -10%;
-      pointer-events: none;
-    }
-
-    .hero-tag {
-      font-family: var(--mono);
-      font-size: 0.78rem;
-      color: var(--accent);
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-      margin-bottom: 1.5rem;
-      opacity: 0;
-      animation: fadeUp 0.8s 0.2s forwards;
-    }
-
-    .hero-title {
-      font-family: var(--serif);
-      font-size: clamp(3.5rem, 8vw, 7rem);
-      line-height: 1.05;
-      color: var(--text);
-      margin-bottom: 1.5rem;
-      opacity: 0;
-      animation: fadeUp 0.8s 0.4s forwards;
-    }
-
-    .hero-title em {
-      font-style: italic;
-      color: var(--accent);
-    }
-
-    .hero-sub {
-      font-size: 1.1rem;
-      color: var(--muted);
-      max-width: 540px;
-      line-height: 1.7;
-      margin-bottom: 2.5rem;
-      opacity: 0;
-      animation: fadeUp 0.8s 0.6s forwards;
-    }
-
-    .hero-ctas {
-      display: flex;
-      gap: 1rem;
-      flex-wrap: wrap;
-      opacity: 0;
-      animation: fadeUp 0.8s 0.8s forwards;
-    }
-
-    .btn {
-      display: inline-block;
-      padding: 0.8rem 2rem;
-      font-family: var(--mono);
-      font-size: 0.82rem;
-      letter-spacing: 0.05em;
-      text-decoration: none;
-      border-radius: 2px;
-      transition: all 0.2s;
-      cursor: pointer;
-    }
-
-    .btn-primary {
-      background: var(--accent);
-      color: var(--bg);
-      font-weight: 500;
-    }
-
-    .btn-primary:hover {
-      background: var(--accent2);
-      transform: translateY(-1px);
-    }
-
-    .btn-outline {
-      border: 1px solid var(--border);
-      color: var(--muted);
-    }
-
-    .btn-outline:hover {
-      border-color: var(--accent);
-      color: var(--accent);
-    }
-
-    .hero-stats {
-      display: flex;
-      gap: 3rem;
-      margin-top: 5rem;
-      padding-top: 3rem;
-      border-top: 1px solid var(--border);
-      opacity: 0;
-      animation: fadeUp 0.8s 1s forwards;
-    }
-
-    .stat-num {
-      font-family: var(--serif);
-      font-size: 2.2rem;
-      color: var(--accent);
-      display: block;
-    }
-
-    .stat-label {
-      font-family: var(--mono);
-      font-size: 0.72rem;
-      color: var(--muted);
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-    }
+    /* ─── CREDIBILITY STRIP ─── */
+    .strip { border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); background: #0d1410; }
+    .strip .wrap { display: flex; flex-wrap: wrap; align-items: center; gap: 0.9rem 2.5rem; padding-top: 1.5rem; padding-bottom: 1.5rem; font-family: var(--mono); font-size: 0.8rem; }
+    .strip-label { font-size: 0.72rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); }
+    .strip span span { color: var(--muted); }
 
     /* ─── SECTIONS ─── */
-    section {
-      padding: 6rem 3rem;
-      max-width: 1200px;
-      margin: 0 auto;
-    }
+    .section { padding-top: 6rem; padding-bottom: 2rem; }
+    .section-head { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: end; gap: 1rem; margin-bottom: 2.5rem; }
+    .section-label { font-family: var(--mono); font-size: 0.75rem; color: var(--accent); letter-spacing: 0.15em; text-transform: uppercase; margin-bottom: 0.8rem; }
+    .section-title { font-family: var(--serif); font-weight: 400; font-size: clamp(2rem, 4vw, 2.8rem); line-height: 1.1; }
+    .text-link { font-family: var(--mono); font-size: 0.82rem; color: var(--accent); text-decoration: none; }
+    .text-link:hover { color: var(--accent2); }
 
-    .section-label {
-      font-family: var(--mono);
-      font-size: 0.75rem;
-      color: var(--accent);
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-      margin-bottom: 1rem;
-    }
+    /* ─── WHAT I DO ─── */
+    .roles { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1.25rem; }
+    .role-card { background: var(--surface); border: 1px solid var(--border); border-radius: 4px; padding: 1.75rem; display: flex; flex-direction: column; gap: 1rem; }
+    .role-card h3 { font-family: var(--serif); font-weight: 400; font-size: 1.6rem; }
+    .role-card p { font-size: 0.98rem; line-height: 1.6; color: var(--muted); }
+    .tools { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+    .tools span { font-family: var(--mono); font-size: 0.72rem; border: 1px solid #2b4a37; padding: 0.25rem 0.55rem; border-radius: 2px; }
+    .role-card .text-link { margin-top: auto; padding-top: 0.5rem; }
 
-    .section-title {
-      font-family: var(--serif);
-      font-size: clamp(2rem, 4vw, 3rem);
-      color: var(--text);
-      margin-bottom: 3rem;
-    }
+    /* ─── CASE STUDIES ─── */
+    .cases { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1.25rem; }
+    .case { background: var(--surface); border: 1px solid var(--border); border-radius: 4px; overflow: hidden; display: flex; flex-direction: column; color: var(--text); text-decoration: none; transition: border-color 0.25s, transform 0.25s; }
+    .case:hover { border-color: rgba(74,222,128,0.35); transform: translateY(-3px); }
+    .case-thumb { height: 190px; background: #0d1410; border-bottom: 1px solid var(--border); display: flex; align-items: center; justify-content: center; overflow: hidden; }
+    .case-thumb img { width: 100%; height: 100%; object-fit: cover; }
+    .case-body { padding: 1.5rem; display: flex; flex-direction: column; gap: 0.9rem; flex-grow: 1; }
+    .case-body h3 { font-family: var(--serif); font-weight: 400; font-size: 1.45rem; line-height: 1.2; }
+    .case-body p { font-size: 0.94rem; line-height: 1.6; color: var(--muted); }
+    .case-result { margin-top: auto; padding-top: 0.9rem; border-top: 1px solid var(--border); font-family: var(--mono); font-size: 0.8rem; display: flex; justify-content: space-between; gap: 1rem; }
+    .case-result span:last-child { color: var(--accent); white-space: nowrap; }
 
-    /* ─── ABOUT ─── */
-    #about {
-      border-top: 1px solid var(--border);
-    }
+    .more { margin-top: 2rem; border-top: 1px solid var(--border); list-style: none; }
+    .more a { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 0.4rem 1.5rem; padding: 1.2rem 0; border-bottom: 1px solid var(--border); color: var(--text); text-decoration: none; transition: color 0.2s; }
+    .more a:hover { color: var(--accent); }
+    .more a span:first-child { font-size: 1.05rem; font-weight: 400; }
+    .more a span:last-child { font-family: var(--mono); font-size: 0.8rem; color: var(--muted); }
 
-    .about-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 5rem;
-      align-items: start;
-    }
-
-    .about-text p {
-      color: var(--muted);
-      line-height: 1.85;
-      margin-bottom: 1.2rem;
-      font-size: 1rem;
-    }
-
-    .about-text p strong {
-      color: var(--text);
-      font-weight: 500;
-    }
-
-    .about-details {
-      display: flex;
-      flex-direction: column;
-      gap: 1.5rem;
-    }
-
-    .detail-block {
-      background: var(--card);
-      border: 1px solid var(--border);
-      padding: 1.5rem;
-      border-radius: 4px;
-    }
-
-    .detail-block h4 {
-      font-family: var(--mono);
-      font-size: 0.72rem;
-      color: var(--accent);
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      margin-bottom: 0.8rem;
-    }
-
-    .detail-block p, .detail-block ul {
-      color: var(--muted);
-      font-size: 0.92rem;
-      line-height: 1.7;
-    }
-
-    .detail-block ul { list-style: none; }
-
-    .detail-block ul li::before {
-      content: '→ ';
-      color: var(--accent);
-      font-family: var(--mono);
-    }
-
-    .skills-grid {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.5rem;
-      margin-top: 0.5rem;
-    }
-
-    .skill-tag {
-      font-family: var(--mono);
-      font-size: 0.72rem;
-      padding: 0.3rem 0.75rem;
-      border: 1px solid var(--border);
-      border-radius: 2px;
-      color: var(--muted);
-      letter-spacing: 0.05em;
-      transition: all 0.2s;
-    }
-
-    .skill-tag:hover {
-      border-color: var(--accent);
-      color: var(--accent);
-    }
-
-    /* ─── PROJECTS ─── */
-    #projects { border-top: 1px solid var(--border); }
-
-    .projects-list {
-      display: flex;
-      flex-direction: column;
-      gap: 1.5rem;
-    }
-
-    .project-card {
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: 4px;
-      padding: 2.5rem;
-      display: grid;
-      grid-template-columns: 1fr auto;
-      gap: 2rem;
-      align-items: start;
-      transition: border-color 0.25s, transform 0.25s;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .project-card::before {
-      content: '';
-      position: absolute;
-      top: 0; left: 0;
-      width: 3px;
-      height: 100%;
-      background: var(--accent);
-      transform: scaleY(0);
-      transform-origin: bottom;
-      transition: transform 0.3s;
-    }
-
-    .project-card:hover {
-      border-color: rgba(74,222,128,0.3);
-      transform: translateX(4px);
-    }
-
-    .project-card:hover::before { transform: scaleY(1); }
-
-    .project-num {
-      font-family: var(--mono);
-      font-size: 0.7rem;
-      color: var(--accent);
-      letter-spacing: 0.1em;
-      margin-bottom: 0.8rem;
-    }
-
-    .project-title {
-      font-family: var(--serif);
-      font-size: 1.5rem;
-      color: var(--text);
-      margin-bottom: 0.8rem;
-      line-height: 1.2;
-    }
-
-    .project-desc {
-      color: var(--muted);
-      line-height: 1.75;
-      font-size: 0.95rem;
-      margin-bottom: 1.2rem;
-    }
-
-    .project-tags {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.4rem;
-    }
-
-    .project-tag {
-      font-family: var(--mono);
-      font-size: 0.68rem;
-      padding: 0.25rem 0.6rem;
-      background: rgba(74,222,128,0.07);
-      border: 1px solid rgba(74,222,128,0.2);
-      border-radius: 2px;
-      color: var(--accent2);
-      letter-spacing: 0.05em;
-    }
-
-    .project-link {
-      display: flex;
-      align-items: center;
-      gap: 0.4rem;
-      font-family: var(--mono);
-      font-size: 0.78rem;
-      color: var(--accent);
-      text-decoration: none;
-      white-space: nowrap;
-      padding: 0.6rem 1.2rem;
-      border: 1px solid rgba(74,222,128,0.3);
-      border-radius: 2px;
-      transition: all 0.2s;
-      align-self: start;
-    }
-
-    .project-link:hover {
-      background: rgba(74,222,128,0.1);
-    }
-
-    /* ─── FEATURED / HIGHLIGHT ─── */
-    .project-card.featured {
-      background: linear-gradient(135deg, #162019 0%, #0f1f14 100%);
-      border-color: rgba(74,222,128,0.25);
-    }
-
-    .featured-badge {
-      font-family: var(--mono);
-      font-size: 0.65rem;
-      color: var(--bg);
-      background: var(--accent);
-      padding: 0.2rem 0.6rem;
-      border-radius: 2px;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      display: inline-block;
-      margin-bottom: 0.6rem;
-    }
+    /* ─── EXPERIENCE ─── */
+    .exp { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.3fr); gap: 2.5rem 4rem; }
+    .exp-intro p { margin-top: 1rem; font-size: 1rem; line-height: 1.65; color: var(--muted); }
+    .exp-list { list-style: none; border-bottom: 1px solid var(--border); }
+    .exp-list li { display: grid; grid-template-columns: 10rem minmax(0, 1fr); gap: 1rem; padding: 1.3rem 0; border-top: 1px solid var(--border); }
+    .exp-date { font-family: var(--mono); font-size: 0.78rem; color: var(--muted); padding-top: 0.2rem; }
+    .exp-role { font-size: 1.05rem; font-weight: 400; }
+    .exp-desc { font-size: 0.92rem; color: var(--muted); line-height: 1.55; margin-top: 0.25rem; }
 
     /* ─── CONTACT ─── */
-    #contact {
-      border-top: 1px solid var(--border);
-      text-align: center;
-    }
-
-    #contact .section-title {
-      margin-bottom: 1rem;
-    }
-
-    .contact-sub {
-      color: var(--muted);
-      max-width: 480px;
-      margin: 0 auto 2.5rem;
-      line-height: 1.7;
-    }
-
-    .contact-links {
-      display: flex;
-      justify-content: center;
-      gap: 1.5rem;
-      flex-wrap: wrap;
-      margin-bottom: 3rem;
-    }
-
-    .contact-item {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 0.3rem;
-    }
-
-    .contact-item span {
-      font-family: var(--mono);
-      font-size: 0.68rem;
-      color: var(--accent);
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-    }
-
-    .contact-item a {
-      color: var(--muted);
-      text-decoration: none;
-      font-size: 0.9rem;
-      transition: color 0.2s;
-    }
-
-    .contact-item a:hover { color: var(--text); }
-
-    /* ─── FOOTER ─── */
-    footer {
-      border-top: 1px solid var(--border);
-      padding: 2rem 3rem;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-
-    footer p {
-      font-family: var(--mono);
-      font-size: 0.72rem;
-      color: var(--muted);
-    }
-
-    .footer-links {
-      display: flex;
-      gap: 1.5rem;
-    }
-
-    .footer-links a {
-      font-family: var(--mono);
-      font-size: 0.72rem;
-      color: var(--muted);
-      text-decoration: none;
-      transition: color 0.2s;
-    }
-
-    .footer-links a:hover { color: var(--accent); }
-
-    /* ─── ANIMATIONS ─── */
-    @keyframes fadeUp {
-      from { opacity: 0; transform: translateY(20px); }
-      to   { opacity: 1; transform: translateY(0); }
-    }
-
-    .reveal {
-      opacity: 0;
-      transform: translateY(24px);
-      transition: opacity 0.7s, transform 0.7s;
-    }
-
-    .reveal.visible {
-      opacity: 1;
-      transform: none;
-    }
+    #contact { padding-top: 6rem; padding-bottom: 6rem; }
+    .contact-card { background: var(--surface); border: 1px solid var(--border); border-radius: 4px; padding: 3.5rem 3rem; display: flex; flex-wrap: wrap; justify-content: space-between; align-items: end; gap: 2rem; }
+    .contact-copy { max-width: 620px; display: flex; flex-direction: column; gap: 1rem; }
+    .contact-copy p { font-size: 1.05rem; line-height: 1.6; color: var(--muted); }
+    .contact-links { display: flex; flex-wrap: wrap; gap: 0.5rem 1.5rem; font-family: var(--mono); font-size: 0.85rem; }
+    .contact-links a { color: var(--accent); text-decoration: none; }
+    .contact-links a:hover { color: var(--accent2); }
 
     /* ─── RESPONSIVE ─── */
+    @media (hover: none) { .case:hover { transform: none; } }
+    @media (max-width: 1024px) {
+      #hero { grid-template-columns: 1fr; gap: 3rem; }
+      .roles, .cases { grid-template-columns: 1fr; }
+      .exp { grid-template-columns: 1fr; }
+    }
     @media (max-width: 768px) {
-      nav { padding: 1rem 1.5rem; }
-      .nav-links { gap: 1.2rem; }
-      #hero { padding: 7rem 1.5rem 3rem; }
-      .hero-stats { gap: 1.5rem; flex-wrap: wrap; }
-      section { padding: 4rem 1.5rem; }
-      .about-grid { grid-template-columns: 1fr; gap: 2.5rem; }
-      .project-card { grid-template-columns: 1fr; }
-      footer { flex-direction: column; gap: 1rem; text-align: center; }
+      .wrap { padding-left: 1.5rem; padding-right: 1.5rem; }
+      #hero { padding-top: 7.5rem; padding-bottom: 3rem; }
+      .hero-sub { font-size: 1.05rem; }
+      .impact-num { font-size: 2.1rem; min-width: 5.5rem; }
+      .section { padding-top: 4rem; }
+      .exp-list li { grid-template-columns: 1fr; gap: 0.3rem; }
+      #contact { padding-top: 4rem; padding-bottom: 4rem; }
+      .contact-card { padding: 2rem 1.5rem; }
+    }
+    @media (max-width: 420px) {
+      .hero-ctas .btn, .contact-card .btn { flex: 1 1 100%; }
     }
   </style>
 </head>
 <body>
 
+  <a href="#main" class="skip-link">Skip to content</a>
+
   <!-- NAV -->
   <nav>
-    <a href="index.html" class="nav-logo" style="text-decoration:none;">jose.quiroga</a>
-    <ul class="nav-links">
+    <a href="index.html" class="nav-logo">jose.quiroga</a>
+    <button class="nav-toggle" aria-label="Menu" aria-expanded="false" aria-controls="nav-links"><span></span><span></span><span></span></button>
+    <ul class="nav-links" id="nav-links">
       <li><a href="projects.html">Projects</a></li>
       <li><a href="about.html">About</a></li>
       <li><a href="skills.html">Skills</a></li>
       <li><a href="publications.html">Publications</a></li>
       <li><a href="resume.html">Resume</a></li>
-      <li><a href="https://www.linkedin.com/in/josefquiroga/" target="_blank">LinkedIn ↗</a></li>
-      <li><a href="https://github.com/josefquiroga" target="_blank">GitHub ↗</a></li>
+      <li><a href="https://www.linkedin.com/in/josefquiroga/" target="_blank" rel="noopener">LinkedIn ↗</a></li>
+      <li><a href="https://github.com/josefquiroga" target="_blank" rel="noopener">GitHub ↗</a></li>
     </ul>
   </nav>
 
-  <!-- HERO -->
-  <div id="hero">
-    <div class="hero-grid"></div>
-    <div class="hero-glow"></div>
-    <p class="hero-tag">Data Scientist · Sydney, Australia</p>
-    <h1 class="hero-title">Turning data into<br /><em>decisions.</em></h1>
-    <p class="hero-sub">
-      I'm Jose — a Data Scientist with a Mechatronics Engineering background. I build ML models, cloud data pipelines, and analytics solutions that drive real business outcomes.
-    </p>
-    <div class="hero-ctas">
-      <a href="projects.html" class="btn btn-primary">View Projects</a>
-      <a href="#contact" class="btn btn-outline">Get in Touch</a>
-    </div>
-    <div class="hero-stats">
-      <div>
-        <span class="stat-num">47%</span>
-        <span class="stat-label">Cloud cost reduction delivered</span>
-      </div>
-      <div>
-        <span class="stat-num">90%</span>
-        <span class="stat-label">Reduction in critical data errors</span>
-      </div>
-      <div>
-        <span class="stat-num">3+</span>
-        <span class="stat-label">Years in production data science</span>
-      </div>
-      <div>
-        <span class="stat-num">1</span>
-        <span class="stat-label">IEEE publication</span>
-      </div>
-    </div>
-  </div>
+  <main id="main">
 
-  <!-- ABOUT -->
-  <section id="about">
-    <p class="section-label reveal">About me</p>
-    <h2 class="section-title reveal">Engineer by training,<br />data scientist by practice.</h2>
-    <div class="about-grid">
-      <div class="about-text reveal">
-        <p>
-          I'm a Data Scientist currently based in <strong>Sydney, Australia</strong>, working at DataMesh Group where I build and deploy machine learning models and large-scale cloud data pipelines. My background is in <strong>Mechatronics Engineering</strong> — which means I approach data problems with an engineering mindset: rigorous, systematic, and focused on real-world impact.
-        </p>
-        <p>
-          I hold an <strong>MSc in Data Science and Innovation</strong> from UTS and an <strong>MEng in Artificial Intelligence and IoT</strong> from the University of Sonora. I've worked across three countries — Mexico, the USA, and Australia — and across industries from automotive manufacturing (Ford Motor Company) to fintech.
-        </p>
-        <p>
-          My work spans the full data science lifecycle: from raw data ingestion and pipeline engineering to predictive modelling, dashboards, and production deployment. I care about building things that are not just technically sound, but that actually move the needle for the business.
-        </p>
-        <p>
-          Outside of work, I'm passionate about the intersection of AI and physical systems — a thread that runs from my early IoT research to my current work in production ML.
-        </p>
-        <br />
-        <a href="https://www.linkedin.com/in/josefquiroga/" class="btn btn-outline" target="_blank">View full experience on LinkedIn ↗</a>
+    <!-- HERO -->
+    <header id="hero" class="wrap">
+      <div class="hero-grid"></div>
+      <div class="hero-copy">
+        <div class="pills">
+          <span class="pill"><span class="dot" aria-hidden="true"></span>Open to data roles · Sydney, hybrid</span>
+          <!-- TODO: add work rights once confirmed, e.g. <span class="pill">Permanent Resident</span> -->
+        </div>
+        <h1 class="hero-title">I build the pipelines and models <em>behind business decisions.</em></h1>
+        <p class="hero-sub">Data Scientist at <strong>DataMesh Group</strong>, Sydney. Mechatronics engineer turned data practitioner — I take payment data from raw ingestion on GCP and AWS through to ML models and dashboards in production.</p>
+        <div class="hero-ctas">
+          <a href="#work" class="btn btn-primary">View case studies</a>
+          <a href="resume.html" class="btn btn-outline">Resume →</a>
+        </div>
       </div>
-      <div class="about-details reveal">
-        <div class="detail-block">
-          <h4>Currently</h4>
-          <ul>
-            <li>Data Scientist at DataMesh Group, Sydney</li>
-            <li>Open to new opportunities in Sydney & remote US roles</li>
-          </ul>
+
+      <section class="impact" aria-label="Selected impact">
+        <p class="impact-head">Selected impact · DataMesh Group</p>
+        <div class="impact-row">
+          <span class="impact-num">47%</span>
+          <div class="impact-text"><strong>Lower cloud infrastructure cost</strong><span>Redesigned core BigQuery datasets and Apache Beam ingestion</span></div>
         </div>
-        <div class="detail-block">
-          <h4>Education</h4>
-          <ul>
-            <li>MSc Data Science & Innovation — UTS</li>
-            <li>MEng Artificial Intelligence & IoT — Univ. of Sonora</li>
-            <li>BSc Mechatronics Engineering — ITESM</li>
-          </ul>
+        <div class="impact-row">
+          <span class="impact-num">90%</span>
+          <div class="impact-text"><strong>Fewer critical duplicate transactions</strong><span>ELT pipelines on GCP plus a BigQuery observability database</span></div>
         </div>
-        <div class="detail-block">
-          <h4>Core Tech Stack</h4>
-          <div class="skills-grid">
-            <span class="skill-tag">Python</span>
-            <span class="skill-tag">Scikit-learn</span>
-            <span class="skill-tag">TensorFlow</span>
-            <span class="skill-tag">SQL</span>
-            <span class="skill-tag">GCP</span>
-            <span class="skill-tag">BigQuery</span>
-            <span class="skill-tag">Apache Beam</span>
-            <span class="skill-tag">AWS</span>
-            <span class="skill-tag">Tableau</span>
-            <span class="skill-tag">Docker</span>
-            <span class="skill-tag">Git</span>
-            <span class="skill-tag">R</span>
-          </div>
+        <div class="impact-row">
+          <span class="impact-num">2,107</span>
+          <div class="impact-text"><strong>Merchant segments clustered</strong><span>RFM + K-Means on card payment data</span></div>
         </div>
-        <div class="detail-block">
-          <h4>Languages</h4>
-          <ul>
-            <li>Spanish — Native</li>
-            <li>English — Professional</li>
-            <li>Italian — B2 (PLIDA certified)</li>
-          </ul>
-        </div>
+      </section>
+    </header>
+
+    <!-- CREDIBILITY STRIP -->
+    <div class="strip">
+      <div class="wrap">
+        <span class="strip-label">Experience across</span>
+        <span>DataMesh Group <span>· fintech</span></span>
+        <span>Ford Motor Company <span>· automotive</span></span>
+        <span>UTS <span>· MSc Data Science</span></span>
+        <span>IEEE ICCMA 2021 <span>· published</span></span>
       </div>
     </div>
-  </section>
 
-  <!-- PROJECTS -->
-  <section id="projects">
-    <p class="section-label reveal">Selected work</p>
-    <h2 class="section-title reveal">Projects</h2>
-    <div class="projects-list">
-
-      <!-- Project 1 -->
-      <div class="project-card featured reveal">
+    <!-- WHAT I DO -->
+    <section class="section wrap" aria-labelledby="what-title">
+      <div class="section-head reveal">
         <div>
-          <span class="featured-badge">Latest</span>
-          <p class="project-num">01</p>
-          <h3 class="project-title">RFM Customer Segmentation & Behavioural Cohort Analysis</h3>
-          <p class="project-desc">
-            Built an end-to-end RFM (Recency, Frequency, Monetary) customer segmentation pipeline on Australian payment transaction data at DataMesh Group. Applied K-Means clustering in 3D RFM space to discover five distinct behavioural cohorts — from high-value loyalists to budget families — enabling targeted marketing strategies and personalised customer engagement across 2,100+ segments.
-          </p>
-          <div class="project-tags">
-            <span class="project-tag">K-Means Clustering</span>
-            <span class="project-tag">RFM Analysis</span>
-            <span class="project-tag">Customer Segmentation</span>
-            <span class="project-tag">Python</span>
-            <span class="project-tag">Unsupervised ML</span>
-            <span class="project-tag">3D Visualisation</span>
-          </div>
+          <p class="section-label">What I do</p>
+          <h2 class="section-title" id="what-title">One engineer, the whole data lifecycle.</h2>
         </div>
-        <a href="projects/rfm-segmentation.html" class="project-link">View Project ↗</a>
+        <a href="skills.html" class="text-link">All skills →</a>
       </div>
+      <div class="roles">
+        <article class="role-card reveal">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#4ade80" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><circle cx="6" cy="17" r="2"/><circle cx="12" cy="8" r="2"/><circle cx="18" cy="14" r="2"/><path d="M7.5 15.5l3-5.5M13.6 9.4l3 3.4"/></svg>
+          <h3>Data Science</h3>
+          <p>Forecasting, segmentation and classification models — taken past the notebook into something the business uses.</p>
+          <div class="tools"><span>Python</span><span>Scikit-learn</span><span>BigQuery ML</span><span>TensorFlow</span></div>
+          <a href="projects/rfm-segmentation.html" class="text-link">Proof: RFM segmentation →</a>
+        </article>
+        <article class="role-card reveal">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#4ade80" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="6" height="5" rx="1"/><rect x="15" y="4" width="6" height="5" rx="1"/><rect x="9" y="15" width="6" height="5" rx="1"/><path d="M6 9v3h12V9M12 12v3"/></svg>
+          <h3>Data Engineering</h3>
+          <p>ELT pipelines and warehouse design on GCP and AWS, built to be cheap to run and hard to break.</p>
+          <div class="tools"><span>BigQuery</span><span>Apache Beam</span><span>AWS</span><span>Docker</span></div>
+          <a href="resume.html" class="text-link">Proof: 47% cost cut, in resume →</a>
+        </article>
+        <article class="role-card reveal">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#4ade80" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg>
+          <h3>Analytics</h3>
+          <p>SQL-first analysis, automated reporting and Tableau dashboards that turn trends into decisions.</p>
+          <div class="tools"><span>SQL</span><span>Tableau</span><span>Athena</span><span>R</span></div>
+          <a href="projects/rfm-segmentation.html" class="text-link">Proof: RFM stakeholder dashboard →</a>
+        </article>
+      </div>
+    </section>
 
-      <!-- Project 2 -->
-      <div class="project-card reveal">
+    <!-- CASE STUDIES -->
+    <section id="work" class="section wrap" aria-labelledby="work-title">
+      <div class="section-head reveal">
         <div>
-          <p class="project-num">02</p>
-          <h3 class="project-title">Autonomic Hydroponic System with Real-Time Monitoring</h3>
-          <p class="project-desc">
-            Designed and implemented a self-managing hydroponic system prototype using IoT-connected embedded devices. The system integrates Autonomic Computing techniques to handle self-monitoring, self-regulation, self-healing, and auto-optimisation of resources — with all sensor data streamed and visualised in real time. Published and presented at the <strong>9th International Conference on Control, Mechatronics and Automation (ICCMA)</strong>.
-          </p>
-          <div class="project-tags">
-            <span class="project-tag">IoT</span>
-            <span class="project-tag">Embedded Systems</span>
-            <span class="project-tag">Real-Time Monitoring</span>
-            <span class="project-tag">Autonomic Computing</span>
-            <span class="project-tag">IEEE Published</span>
-          </div>
+          <p class="section-label">Selected work</p>
+          <h2 class="section-title" id="work-title">Case studies</h2>
         </div>
-        <a href="projects/hydroponic.html" class="project-link">View Project ↗</a>
+        <a href="projects.html" class="text-link">All projects →</a>
       </div>
-
-      <!-- Project 3 -->
-      <div class="project-card reveal">
-        <div>
-          <p class="project-num">03</p>
-          <h3 class="project-title">Land Cover Classification via Satellite Image Segmentation</h3>
-          <p class="project-desc">
-            Applied unsupervised machine learning to identify areas of forage loss from satellite imagery. Using the K-Means clustering algorithm, distinct colour clusters were extracted from the images and used to create masks that differentiate biomass-rich areas from barren land — providing a scalable, low-cost method for environmental and agricultural monitoring across large geographic areas.
-          </p>
-          <div class="project-tags">
-            <span class="project-tag">Image Segmentation</span>
-            <span class="project-tag">K-Means Clustering</span>
-            <span class="project-tag">Remote Sensing</span>
-            <span class="project-tag">Python</span>
-            <span class="project-tag">Unsupervised ML</span>
+      <div class="cases">
+        <a href="projects/rfm-segmentation.html" class="case reveal">
+          <div class="case-thumb">
+            <svg width="260" height="150" viewBox="0 0 260 150" aria-hidden="true"><g fill="#4ade80"><circle cx="40" cy="110" r="4"/><circle cx="52" cy="98" r="4"/><circle cx="34" cy="96" r="4"/><circle cx="58" cy="116" r="4"/></g><g fill="#60a5fa"><circle cx="110" cy="50" r="4"/><circle cx="124" cy="40" r="4"/><circle cx="118" cy="62" r="4"/><circle cx="102" cy="38" r="4"/></g><g fill="#fbbf24"><circle cx="190" cy="100" r="4"/><circle cx="204" cy="88" r="4"/><circle cx="182" cy="86" r="4"/><circle cx="212" cy="108" r="4"/></g><g fill="#f472b6"><circle cx="210" cy="30" r="4"/><circle cx="222" cy="44" r="4"/></g><g fill="#7a9e87"><circle cx="140" cy="128" r="4"/><circle cx="152" cy="118" r="4"/></g></svg>
           </div>
+          <div class="case-body">
+            <div class="role-tags"><span class="role-tag role-ds">Data Science</span><span class="role-tag role-da">Analytics</span></div>
+            <h3>RFM customer segmentation on payment data</h3>
+            <p>K-Means over standardised RFM vectors surfaced five behavioural cohorts, served to stakeholders through an API and React dashboard.</p>
+            <p class="case-result"><span>5 cohorts · 2,107 segments</span><span>Read →</span></p>
+          </div>
+        </a>
+        <a href="projects/plant-disease.html" class="case reveal">
+          <div class="case-thumb"><img src="images/pic01.webp" alt="" width="1600" height="1469" loading="lazy" decoding="async" /></div>
+          <div class="case-body">
+            <div class="role-tags"><span class="role-tag role-ds">Data Science</span></div>
+            <h3>Plant disease classification with a CNN</h3>
+            <p>End-to-end TensorFlow pipeline — augmentation, architecture, training and evaluation — for automated leaf-disease detection.</p>
+            <p class="case-result"><span>89% accuracy · 20k+ images</span><span>Read →</span></p>
+          </div>
+        </a>
+        <a href="projects/satellite.html" class="case reveal">
+          <div class="case-thumb"><img src="images/pic07.webp" alt="" width="396" height="720" loading="lazy" decoding="async" /></div>
+          <div class="case-body">
+            <div class="role-tags"><span class="role-tag role-ds">Data Science</span><span class="role-tag role-da">Analytics</span></div>
+            <h3>Land-cover segmentation from satellite imagery</h3>
+            <p>Unsupervised colour clustering to separate biomass-rich areas from barren land — low-cost monitoring across large areas.</p>
+            <p class="case-result"><span>K-Means · remote sensing</span><span>Read →</span></p>
+          </div>
+        </a>
+        <!-- TODO: once written, replace the satellite card with the data-engineering case study:
+             "BigQuery + Beam re-architecture" — 47% lower cloud cost, 90% fewer duplicate transactions.
+             Use role-tag role-de. -->
+      </div>
+      <ul class="more">
+        <li><a href="projects/hydroponic.html" class="reveal"><span>Autonomic hydroponic system — IoT and real-time monitoring</span><span>IEEE ICCMA 2021 →</span></a></li>
+      </ul>
+    </section>
+
+    <!-- EXPERIENCE -->
+    <section class="section wrap exp" aria-labelledby="exp-title">
+      <div class="exp-intro reveal">
+        <p class="section-label">Experience</p>
+        <h2 class="section-title" id="exp-title">Engineer by training, data scientist by practice.</h2>
+        <p>Worked across Mexico, the USA and Australia. Spanish native, English professional, Italian B2.</p>
+        <p><a href="about.html" class="text-link">More about me →</a></p>
+      </div>
+      <ul class="exp-list reveal">
+        <li><span class="exp-date">Dec 2024 — now</span><div><p class="exp-role">Data Scientist · DataMesh Group</p><p class="exp-desc">Sydney · revenue forecasting, ELT pipelines on GCP, data-quality observability</p></div></li>
+        <li><span class="exp-date">May 2023 — Dec 2024</span><div><p class="exp-role">Junior Data Analyst · DataMesh Group</p><p class="exp-desc">Sydney · Tableau dashboards, automated reporting on AWS Lambda and Athena</p></div></li>
+        <li><span class="exp-date">Feb 2021 — Jan 2022</span><div><p class="exp-role">Automation Engineer · Ford Motor Company</p><p class="exp-desc">Hermosillo, Mexico · production analytics, MTTR/MTBF reporting in MS-SQL</p></div></li>
+        <li><span class="exp-date">Education</span><div><p class="exp-role">MSc Data Science &amp; Innovation · UTS</p><p class="exp-desc">MEng AI &amp; IoT · Univ. of Sonora — BSc Mechatronics · ITESM</p></div></li>
+      </ul>
+    </section>
+
+    <!-- CONTACT -->
+    <section id="contact" class="wrap" aria-labelledby="contact-title">
+      <div class="contact-card reveal">
+        <div class="contact-copy">
+          <h2 class="section-title" id="contact-title">Hiring for a data role in Sydney?</h2>
+          <p>Data science, data engineering or analytics — happy to talk.</p>
+          <p class="contact-links">
+            <a href="mailto:josef.quiroga@gmail.com">josef.quiroga@gmail.com</a>
+            <a href="https://www.linkedin.com/in/josefquiroga/" target="_blank" rel="noopener">LinkedIn ↗</a>
+            <a href="https://github.com/josefquiroga" target="_blank" rel="noopener">GitHub ↗</a>
+          </p>
         </div>
-        <a href="projects/satellite.html" class="project-link">View Project ↗</a>
+        <div class="hero-ctas">
+          <a href="mailto:josef.quiroga@gmail.com" class="btn btn-primary">Email me</a>
+          <a href="resume.html" class="btn btn-outline">Resume →</a>
+        </div>
       </div>
+    </section>
 
-    </div>
-  </section>
-
-  <!-- CONTACT -->
-  <section id="contact">
-    <p class="section-label reveal">Let's work together</p>
-    <h2 class="section-title reveal">Get in touch</h2>
-    <p class="contact-sub reveal">
-      I'm open to new data science opportunities in Sydney and remote roles with US companies. Feel free to reach out via email or connect on LinkedIn.
-    </p>
-    <div class="contact-links reveal">
-      <div class="contact-item">
-        <span>Email</span>
-        <a href="mailto:josef.quiroga@gmail.com">josef.quiroga@gmail.com</a>
-      </div>
-      <div class="contact-item">
-        <span>LinkedIn</span>
-        <a href="https://www.linkedin.com/in/josefquiroga/" target="_blank">linkedin.com/in/josefquiroga</a>
-      </div>
-      <div class="contact-item">
-        <span>GitHub</span>
-        <a href="https://github.com/josefquiroga" target="_blank">github.com/josefquiroga</a>
-      </div>
-      <div class="contact-item">
-        <span>Location</span>
-        <span style="color:var(--muted)">Sydney, NSW, Australia</span>
-      </div>
-    </div>
-    <div class="reveal">
-      <a href="mailto:josef.quiroga@gmail.com" class="btn btn-primary">Send me an email</a>
-    </div>
-  </section>
+  </main>
 
   <!-- FOOTER -->
   <footer>
-    <p>© 2025 Jose Quiroga</p>
+    <p>© 2026 Jose Quiroga · Sydney, NSW</p>
     <div class="footer-links">
+      <a href="projects.html">Projects</a>
       <a href="about.html">About</a>
       <a href="skills.html">Skills</a>
       <a href="publications.html">Publications</a>
       <a href="resume.html">Resume</a>
-      <a href="https://www.linkedin.com/in/josefquiroga/" target="_blank">LinkedIn</a>
-      <a href="https://github.com/josefquiroga" target="_blank">GitHub</a>
+      <a href="https://www.linkedin.com/in/josefquiroga/" target="_blank" rel="noopener">LinkedIn</a>
+      <a href="https://github.com/josefquiroga" target="_blank" rel="noopener">GitHub</a>
       <a href="mailto:josef.quiroga@gmail.com">Email</a>
     </div>
   </footer>
 
-  <script>
-    const reveals = document.querySelectorAll('.reveal');
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach((e, i) => { if (e.isIntersecting) { setTimeout(() => e.target.classList.add('visible'), i * 80); observer.unobserve(e.target); } });
-    }, { threshold: 0.1 });
-    reveals.forEach(el => observer.observe(el));
-  </script>
-
+  <script src="js/site.js" defer></script>
 </body>
 </html>
